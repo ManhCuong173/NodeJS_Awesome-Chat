@@ -1,5 +1,5 @@
 let authController = (req,res) => {
-  res.render('auth/logRegister');
+  res.render('auth/master');
 };
 
 module.exports = {
