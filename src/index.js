@@ -8,7 +8,6 @@ const app = express();
 ConnectDB();
 //Use Environment Variables
 dotenv.config();
-
 app.get('/testdb', async (req,res) => {
   try {
     let item = {
