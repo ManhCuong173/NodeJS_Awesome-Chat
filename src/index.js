@@ -1,9 +1,11 @@
 import express from "express"
 import ConnectDB from "./config/connectDB"
 import ViewEngine from "./config/viewEngine"
+import bodyParser from 'body-parser'
 import ContactModel from './models/contact.model'
 import dotenv from 'dotenv'
 import api from './routes/api'
+
 // const express = require('express');
 const app = express();
 
@@ -12,6 +14,9 @@ ConnectDB();
 
 //View Engine 
 ViewEngine(app);
+
+//Enable post data for request
+app.use(bodyParser.urlencoded({extended: true}));
 
 //Call API
 api(app);
