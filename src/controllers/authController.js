@@ -1,7 +1,11 @@
 import {validationResult} from 'express-validator/check';
+import {auth} from '../service/index';
 
 let getLoginRegister = (req,res) => {
-  res.render('auth/master');
+  return res.render('auth/master', {
+    errors: req.flash("errors"),
+    success: req.flash("success")
+  });
 };
 
 let postRegister = (req,res) => {
@@ -12,8 +16,10 @@ let postRegister = (req,res) => {
     errors.forEach(element => {
       errorsArr.push(element.msg);
     });
-    console.log(errorsArr);
+    req.flash("errors", errorsArr);
+    return res.redirect("/login-register");
   }
+  auth.register(req.body.email,req.body.gender,req.body.password);
 }
 module.exports = {
   getLoginRegister: getLoginRegister,
