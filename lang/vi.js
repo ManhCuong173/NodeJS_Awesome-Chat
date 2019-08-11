@@ -8,3 +8,10 @@ export const transValidation = {
 export const transError = {
   account_in_use: "Email này đã được sử dụng"
 }
+
+export const transSuccess = {
+  userCreated: (userEmail) => {
+    return `Tài khoàn <strorng> ${userEmail} </strong> đã được kích hoạt, vui lòng kiểm tra email của bạn để active`
+  }
+
+}

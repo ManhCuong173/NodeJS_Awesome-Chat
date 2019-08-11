@@ -5,4 +5,8 @@
   DB_USERNAME=*** 
   DB_PASSWORD=***
   APP_PORT=***
-  APP_HOSTNAM******
+  APP_HOSTNAME=***
+  MAIL_USER=***
+  MAIL_PASSWORD=***
+  MAIL_HOST=***
+  MAIL_PORT=***

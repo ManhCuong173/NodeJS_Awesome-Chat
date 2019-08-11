@@ -1,5 +1,6 @@
 import {validationResult} from 'express-validator/check';
 import {auth} from '../service/index';
+import {transSuccess} from '../../lang/vi';
 
 let getLoginRegister = (req,res) => {
   return res.render('auth/master', {
@@ -28,7 +29,7 @@ let postRegister = async (req,res) => {
   try {
     //Vì phương thức register này phải xử lý bên trong đến 2 await cho nên nó cần phải dược chờ
     var newuser = await auth.register(req.body.email,req.body.gender,req.body.password);
-    successArr.push("Thành công");
+    successArr.push(transSuccess.userCreated(newuser.local.email));
     req.flash("success", successArr);
     return res.redirect('/login-register');
   } catch (error) {

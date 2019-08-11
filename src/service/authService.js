@@ -1,7 +1,9 @@
 import UserModel from '../models/userModel';
 import bcrypt from 'bcrypt';
 import uuidv4 from 'uuid';
-import {transError} from '../../lang/vi'
+import {transError} from '../../lang/vi';
+import sendEmail from '../config/mailer'
+
 
 let saltRounds = 7;
 
@@ -25,10 +27,13 @@ let register =  (email,gender,password) => {
     };
 
     let user = await UserModel.create(userItem);
+    //Send email to SMTP Server Gmail for validating
+
     return resolve(user);
   });  
 };
 
 module.exports = {
   register: register
-}
+} 
+
