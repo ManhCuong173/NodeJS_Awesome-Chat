@@ -3,8 +3,7 @@ import bcrypt from 'bcrypt';
 import uuidv4 from 'uuid';
 import {transError} from '../../lang/vi';
 import sendEmail from '../config/mailer'
-
-
+import uuidv4 from 'uuid'
 let saltRounds = 7;
 
 let register =  (email,gender,password) => {
@@ -35,5 +34,7 @@ let register =  (email,gender,password) => {
 
 module.exports = {
   register: register
-} 
+}   
+
+
 
