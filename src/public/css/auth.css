@@ -377,3 +377,11 @@ label {
   padding: 12px;
   margin-bottom: 10px;
 }
+.row{
+  background: #8a6d3bb5 !important;
+}
+.row:nth-child(1){border-top-left-radius: 25px;border-top-right-radius: 25px;}
+.row:nth-child(3){border-bottom-left-radius: 25px;border-bottom-right-radius: 25px;}
+.login-title{
+  font-family:inherit;
+}

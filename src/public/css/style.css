@@ -433,6 +433,10 @@ label:focus,
   font-size: 14px;
 }
 
+.navbar-inverse{
+  background: linear-gradient(45deg, black,purple);
+}
+
 .dropdown-menu {
   background-color: #333;
 }
