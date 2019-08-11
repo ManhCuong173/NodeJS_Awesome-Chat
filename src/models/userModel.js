@@ -37,7 +37,6 @@ UserSchema.statics = {
 
   findByEmail(email){
     return this.findOne({"local.email":email}).exec();
-    
   }
 };
 
