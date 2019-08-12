@@ -1,6 +1,5 @@
 import {validationResult} from 'express-validator/check';
 import {auth} from '../service/index';
-import {transSuccess} from '../../lang/vi';
 
 let getLoginRegister = (req,res) => {
   return res.render('auth/master', {
@@ -28,18 +27,34 @@ let postRegister = async (req,res) => {
   //ELSE
   try {
     //Vì phương thức register này phải xử lý bên trong đến 2 await cho nên nó cần phải dược chờ
-    var newuser = await auth.register(req.body.email,req.body.gender,req.body.password);
-    successArr.push(transSuccess.userCreated(newuser.local.email));
+    var newuser = await auth.register(req.body.email,req.body.gender,req.body.password,req.protocol,req.get("host"));
+    successArr.push(newuser);
     req.flash("success", successArr);
     return res.redirect('/login-register');
   } catch (error) {
     errorsArr.push(error);
     req.flash('errors', errorsArr);
     return res.redirect('/login-register');
-  }
+    } 
+  };
   
-}
+let verifyAccount = async (req,res) => {
+  let errorsArr = [];
+  let successArr = [];
+  try {
+    //Vì phương thức register này phải xử lý bên trong đến 2 await cho nên nó cần phải dược chờ
+    let verifyAccount = await auth.verifyAccount();
+    successArr.push(verifyAccount);
+    req.flash("success", successArr);
+    return res.redirect('/login-register');
+  } catch (error) {
+    errorsArr.push(error);
+    req.flash('errors', errorsArr);
+    return res.redirect('/login-register');
+    } 
+  };
 module.exports = {
   getLoginRegister: getLoginRegister,
-  postRegister: postRegister
+  postRegister: postRegister,
+  verifyAccount: verifyAccount
 };

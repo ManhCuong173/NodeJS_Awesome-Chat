@@ -1,4 +1,4 @@
-import nodeMailer from 'nodemailer
+import nodeMailer from 'nodemailer';
 import { model } from 'mongoose';
 
 let adminEmail = process.env.MAIL_USER;
