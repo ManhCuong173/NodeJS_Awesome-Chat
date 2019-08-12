@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 let  Schema = mongoose.Schema;
 
@@ -37,6 +37,17 @@ UserSchema.statics = {
 
   findByEmail(email){
     return this.findOne({"local.email":email}).exec();
+  },
+
+  removeById(id) {
+    return this.findByIdAndRemove(id).exec();
+  },
+
+  verify(token) {
+    return this.findOneAndUpdate(
+      {"local.verifyToken":token},
+      {"local.isActive":true,"local.verifyToken":null}
+    ).exec();
   }
 };
 
