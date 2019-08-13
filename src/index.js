@@ -16,6 +16,9 @@ initPassportLocal();
 // const express = require('express');
 const app = express();
 
+//Use Environment Variables
+dotenv.config();
+
 //Connect to MongoDB
 ConnectDB();
 

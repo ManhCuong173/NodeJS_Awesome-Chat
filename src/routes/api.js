@@ -14,17 +14,17 @@
 let initRoutes = (app) => {
 
   //Router
-  router.get('/', home.homeController);
-  router.get('/login-register', auth.getLoginRegister);
+  router.get('/',auth.checkLoggin,home.homeController);
+  router.get('/login-register',auth.checkLogout, auth.getLoginRegister);
   router.post("/register", authValid.register,auth.postRegister);
-  router.get("/verify/:token", auth.verifyAccount);
+  router.get("/verify/:token",auth.checkLogout, auth.verifyAccount);
   router.post("/login", passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login-register',
     successFlash: true,
     failureFlash: true
   }));
-
+  router.get('/logout', auth.getLogout);
   app.use('/', router);
 };
 

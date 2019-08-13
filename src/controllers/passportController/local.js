@@ -25,6 +25,8 @@ let initPassportLocal = () => {
 
     } catch (error) {
       console.log(error);
+
+      //When errors from user don't happen. It's exactly from server's error
       return done(null, false, req.flash('errors', transError.server_error));      
     }
   }));
@@ -35,13 +37,13 @@ let initPassportLocal = () => {
   });
 
   passport.deserializeUser(async (id, done)=> {
-      try {
-        let userReturn = await UserModel.findUserById(id)
-        return done(null,userReturn);
-      } catch (error) {
-        return done(error,null);
-      }
-  })
+        try {
+          let user = await UserModel.findUserById(id);
+          return done(null, user);
+        } catch (error) {
+          return done(false, null);
+        }
+  });
  }
 
  module.exports = initPassportLocal;
