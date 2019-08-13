@@ -17,6 +17,7 @@ let configureSession = (app) => {
     key: "express.sid",
     secret: "mySecret",
     resave: true,
+    store: sessionStore,
     saveUninitialized: false,
     cookie: {
       maxAge: 1000*60*30

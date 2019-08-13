@@ -1,5 +1,6 @@
 import {validationResult} from 'express-validator/check';
 import {auth} from '../service/index';
+import {transSuccess} from '../../lang/vi'
 
 let getLoginRegister = (req,res) => {
   return res.render('auth/master', {
@@ -52,8 +53,31 @@ let verifyAccount = async (req,res) => {
     return res.redirect('/login-register');
     } 
   };
+
+let getLogout = (req,res) => {
+  req.logout();
+  req.flash('success', transSuccess.logout_success);
+  res.redirect('/login-register');
+}
+
+let checkLoggin = (req,res,next) => {
+  if(!req.isAuthenticated()) {
+    res.redirect('/login-register');
+  }
+  next();
+}
+
+let checkLogout = (req,res,next) => {
+  if(req.isAuthenticated()) {
+    res.redirect('/');
+  }
+  next();
+}
 module.exports = {
   getLoginRegister: getLoginRegister,
   postRegister: postRegister,
-  verifyAccount: verifyAccount
+  verifyAccount: verifyAccount,
+  getLogout: getLogout,
+  checkLoggin: checkLoggin,
+  checkLogout: checkLogout
 };
