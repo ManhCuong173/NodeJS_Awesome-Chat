@@ -1,1 +1,6 @@
-<div class="master-success-message alert alert-success">Success example</div>
+<% if(success!= '') {%>
+  <% success.forEach((item) => {%>
+    <script>openRegisterModal();</script>
+    <div class="master-success-message alert alert-success"><%- item %></div>
+  <%}); %>
+<%} %>

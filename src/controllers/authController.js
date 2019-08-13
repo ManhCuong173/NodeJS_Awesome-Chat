@@ -42,8 +42,7 @@ let verifyAccount = async (req,res) => {
   let errorsArr = [];
   let successArr = [];
   try {
-    //Vì phương thức register này phải xử lý bên trong đến 2 await cho nên nó cần phải dược chờ
-    let verifyAccount = await auth.verifyAccount();
+    let verifyAccount = await auth.verifyAccount(req.params.token);
     successArr.push(verifyAccount);
     req.flash("success", successArr);
     return res.redirect('/login-register');
