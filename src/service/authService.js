@@ -47,7 +47,12 @@ let register =  (email,gender,password,protocol,host) => {
 
 let verifyAccount = (token) => {
   return new Promise(async (resolve,reject)=>{
-    var verify = await UserModel.verify(token);
+    let userByToken = await UserModel.findByToken(token);
+    if(!userByToken) {
+      return reject(transError.token_undefined);
+    } 
+    
+    await UserModel.verify(token);
     resolve(transSuccess.account_actived);
   });
 };

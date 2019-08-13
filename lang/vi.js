@@ -6,14 +6,22 @@ export const transValidation = {
 }
 
 export const transError = {
-  account_in_use: "Email này đã được sử dụng"
+  account_in_use: "Email này đã được sử dụng",
+  account_removed: "Tài khoản này đã bị gỡ khỏi hệ thống, nếu tin rằng đây là sự hiểu nhầm vui lòng liên hệ bộ phận tư vấn của chúng tôi. Xin chân thành cảm ơn",
+  account_not_active: "Tài khoản này đã được đăng ký nhưng chưa kích hoạt. Vui lòng kiểm tra email của bạn để xác nhận kích hoạt. Xin cảm ơn",
+  token_undefined: "Token không tồn tại",
+  login_failed: "Sai tài khoản hoặc mật khẩu" ,
+  server_error: "Lỗi từ phía server. Bạn đăng nhập lại một lần nữa"
 }
 
 export const transSuccess = {
   userCreated: (userEmail) => {
     return `Tài khoản <strong>${userEmail}</strong> đã được kích hoạt, vui lòng kiểm tra email của bạn để active`
   },
-  account_actived: "Kích hoạt tài khoản thành công, bạn đã có thể đăng nhập vào ứng dụng"
+  account_actived: "Kích hoạt tài khoản thành công, bạn đã có thể đăng nhập vào ứng dụng",
+  login_success: (username) => {
+    return `Xin chào <h2><strong>${username}</strong></h2>`;
+  } 
 };
 
 export const transMail = {
