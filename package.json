@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "babel-node src/index.js"
+    "start": "babel-node src/server.js"
   },
   "repository": {
     "type": "git",
@@ -32,11 +32,13 @@
     "mongoose": "^4.13.9",
     "nodemailer": "^4.4.2",
     "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
     "passport-local": "^1.0.0",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "pem": "^1.13.2"
   }
 }
