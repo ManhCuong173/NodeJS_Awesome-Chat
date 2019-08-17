@@ -1,10 +1,13 @@
   import express from 'express';
-  import {home,auth} from '../controllers/index';
+  import {home,auth,user} from '../controllers/index';
   import {authValid} from '../validation/index';
   import initPassport from '../controllers/passportController/local'
   import initPassportFacebook from '../controllers/passportController/facebook'
   import initPassportLocal from '../controllers/passportController/local'
   import passport from 'passport'
+  import multer from 'multer'
+  import {app} from '../config/app'
+
   //Init passportlocal
   initPassportLocal();
 
@@ -13,6 +16,8 @@
   initPassportFacebook();
 
   let router = express.Router(); 
+  let upload = multer({dest: app.avatar_directory});
+
 
 /* Init app
 * @param app from exactly express module
@@ -22,8 +27,8 @@ let initRoutes = (app) => {
   //Router
   router.get('/',auth.checkLoggin,home.homeController);
   router.get('/login-register',auth.checkLogout, auth.getLoginRegister);
-  router.post("/register", authValid.register,auth.postRegister);
   router.get("/verify/:token",auth.checkLogout, auth.verifyAccount);
+  router.post("/register", authValid.register,auth.postRegister);
   router.post("/login", passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login-register',
@@ -31,11 +36,13 @@ let initRoutes = (app) => {
     failureFlash: true
   }));
   router.get('/logout', auth.getLogout);
+  //Facebook login
   router.get("/auth/facebook", passport.authenticate('facebook',{scope: ['email']}));
   router.get('/auth/facebook/callback', passport.authenticate('facebook',{
     successRedirect: '/',
     failureRedirect: '/login-register'
   }));
+  router.put('/user/update-avatar',auth.checkLoggin,user.updateAvatar);
   app.use('/', router);
 };
 
