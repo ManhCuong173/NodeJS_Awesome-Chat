@@ -11,7 +11,9 @@ export const transError = {
   account_not_active: "Tài khoản này đã được đăng ký nhưng chưa kích hoạt. Vui lòng kiểm tra email của bạn để xác nhận kích hoạt. Xin cảm ơn",
   token_undefined: "Token không tồn tại",
   login_failed: "Sai tài khoản hoặc mật khẩu" ,
-  server_error: "Lỗi từ phía server. Bạn đăng nhập lại một lần nữa"
+  server_error: "Lỗi từ phía server. Bạn đăng nhập lại một lần nữa",
+  avatar_type: "Kiểu file không hoợp lệ, chỉ chấp nhận kiểu file png, jpg, jpeg",
+  avatar_size: "Ảnh upload chỉ tối đa cho phép 1MB"
 }
 
 export const transSuccess = {
