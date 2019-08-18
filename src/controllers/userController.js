@@ -1,8 +1,9 @@
 import multer from 'multer'
 import {app} from './../config/app'
-import {transError} from '../../lang/vi'
+import {transError, transSuccess} from '../../lang/vi'
 import uuidv4 from 'uuid/v4'
-
+import {user} from '../service/index'
+import fsExtra from 'fs-extra'
 
 let storageAvatar = multer.diskStorage({
   destination: (req,file,callback) => {
@@ -31,11 +32,14 @@ let avatarUploadFile = multer({
 }).single('avatar');
 
 let updateAvatar = (req, res) => {
-  avatarUploadFile(req, res, function (err) {
+  avatarUploadFile(req, res, async function(err) {
     if(err) {
+      //Xử lý kích thước ảnh là 1 trong những lỗi multer chưa triển, chúng ta phải tự làm thủ công nó
+      //Nếu property message của error xuất hiện (là cái mà multer chưa giúp ta display ) thì in lỗi đó ra
       if(err.message) {
         return res.status(500).send(transError.avatar_size);
       }
+      //Không có lỗi đặc biệt nào multer chưa tiền xử lý dùm dev thì chúng ta in những regular error
       return res.status(500).send(err);
     }
     try {
@@ -43,11 +47,32 @@ let updateAvatar = (req, res) => {
         avatar: req.file.filename,
         updateAt: Date.now()
       };
-    } catch (error) {
+
+      let userUpdate = await user.updateUser(req.user._id, updateUserItem);
       
+      //Remove old user avatar
+      await fsExtra.remove(`${app.avatar_directory}\\${userUpdate.avatar}`);
+
+      let result = {
+        message: transSuccess.avatar_updated,
+        imageSrc: `/images/users/${req.file.filename}`
+      }
+
+      return res.status(200).send(result);
+    } catch (error) {
+      return res.status(500).send(error);
     }
   });
 }
+
+let updateInfo = (req, res) => {
+  try {
+    
+  } catch (error) {
+    
+  }
+};
 module.exports = {
-  updateAvatar: updateAvatar
+  updateAvatar: updateAvatar,
+  updateInfo: updateInfo
 };
