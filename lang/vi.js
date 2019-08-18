@@ -24,7 +24,8 @@ export const transSuccess = {
   login_success: (username) => {
     return `Xin chào <h2><strong>${username}</strong></h2>`;
   },
-  logout_success: "Đăng xuất thành công"
+  logout_success: "Đăng xuất thành công",
+  avatar_updated: "Thay đổi ảnh đại diện thành công"
 };
 
 export const transMail = {

@@ -43,6 +43,7 @@ let initRoutes = (app) => {
     failureRedirect: '/login-register'
   }));
   router.put('/user/update-avatar',auth.checkLoggin,user.updateAvatar);
+  router.put('/user/update-info', auth.checkLoggin, user.updateInfo);
   app.use('/', router);
 };
 

@@ -1,7 +1,6 @@
 let userAvatar = null;
 let userInfo = {};
 let avatarOrigin = null;
-
 function updateUserInfo(){
 
   $("#input-change-avatar").bind("change", function(){
@@ -68,41 +67,98 @@ function updateUserInfo(){
   });
 };
 
+function callUpdateUserAvatar(){
+  $.ajax({
+    url: "/user/update-avatar",
+    //Chuẩn restful API update data
+    type: "put",
+    //Với kiểu dữ liệu gửi lên là formData gửi những dữ liệu binary data thì phải để 3 trường ở dưới là false
+    cache: false,
+    contentType: false,
+    processData: false,
+    data: userAvatar,
+    success: function(result){
+      //Display success
+      $(".user-modal-alert-success").find("span").text("Thành công");
+      $(".user-modal-alert-success").css("display", "block");
 
+      //update avatar navbar src 
+      $("#navbar-avatar").attr("src", result.imageSrc);
+      $('#user-modal-avatar').attr("src", result.imageSrc);
 
+    },
+    error: function(error){
+      //Display error
+      $(".user-modal-alert-error").find("span").text(error.responseText);
+      $(".user-modal-alert-error").css("display", "block");   
+    }
+  });
+};
+
+function callUpdateUserInfo() {
+  $.ajax({
+    url: "/user/update-info",
+    //Chuẩn restful API update data
+    type: "put",
+    data: userInfo,
+    success: function(result){
+      //Display success
+      $(".user-modal-alert-success").find("span").text(result.message);
+      $(".user-modal-alert-success").css("display", "block");
+
+      //Phương thức này sẽ gán dữ liệu gửi lên server (userInfo) vào biến originUserInfo
+      //nếu server xử lý xong và success trả về cho client. Methods Assign được thực 
+      //thi với điều kiện 2 object phải có cùng key
+      originUserInfo = Object.assign(originUserInfo, userInfo);
+      $('#navbar-username').text(originUserInfo.username);
+      $('#input-btn-cancel-update-user').click();
+    },
+    error: function(error){
+      //Display error
+      $(".user-modal-alert-error").find("span").text(error.responseText);
+      $(".user-modal-alert-error").css("display", "block");   
+    }
+  });
+}
 $("document").ready(function(){
   avatarOrigin = $('#user-modal-avatar').attr("src"); 
+  let originUserInfo = {
+    username: $("#input-change-username").val(),
+    gender: ($("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() : $("#input-change-gender-female").val(),
+    address: $("#input-change-address").val(),
+    phone: $("#input-change-phone").val()
+  }
+  //Gọi function chỉnh ảnh phía client và gán giá trị gốc váo biến userInfo
   updateUserInfo();
-  
-  //Nhận 1 sự kiện click thay đổi ảnh 
+
+  //Nhận 1 sự kiện click thay đổi
   $("#input-btn-update-user").bind('click', function(){
+    //Check user đã chỉnh ảnh hay chưa
     if($.isEmptyObject(userInfo) && userAvatar==null){
       alertify.notify("Bạn phải chỉnh sửa trước khi lưu thông tin", "error", 7);
       return false;
     }
-    $.ajax({
-      url: "/user/update-avatar",
-      //Chuẩn restful API update data
-      type: "put",
-      //Với kiểu dữ liệu gửi lên là formData gửi những dữ liệu binary data thì phải để 3 trường ở dưới là false
-      cache: false,
-      contentType: false,
-      processData: false,
-      data: userAvatar,
-      success: function(result){
-        
-      },
-      error: function(error){
-        //Display error
-        $(".user-modal-alert-error").find("span").text(error.responseText);
-        $(".user-modal-alert-error").css("display", "block");
-      }
-    });
+    
+    //Chỉ chỉnh ảnh
+    if(userAvatar!=null){
+      //Call ajax 
+      callUpdateUserAvatar();
+    }
+    //Chỉ chỉnh thông tin text
+    if(!$.isEmptyObject(userInfo)){
+      callUpdateUserInfo();
+    }
+    
   });
 
   $("#input-btn-cancel-update-user").bind("click", function(){
     userAvatar = null;
     userInfo = {};
+    $('#input-change-avatar').val("");
     $('#user-modal-avatar').attr("src", avatarOrigin);
+    $('#input-change-username').val(originUserInfo.username);
+    $('#input-change-address').val(originUserInfo.address);
+    $('#input-change-phone').val(originUserInfo.phone);
+    originUserInfo.gender === 'male' ? $('#input-change-gender-male').click() : $('#input-change-gender-female').click()
   });
 });
