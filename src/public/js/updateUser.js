@@ -1,6 +1,12 @@
 let userAvatar = null;
 let userInfo = {};
 let avatarOrigin = null;
+let originUserInfo = {
+  username: $("#input-change-username").val(),
+  gender: ($("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() : $("#input-change-gender-female").val(),
+  address: $("#input-change-address").val(),
+  phone: $("#input-change-phone").val()
+}
 function updateUserInfo(){
 
   $("#input-change-avatar").bind("change", function(){
@@ -79,7 +85,7 @@ function callUpdateUserAvatar(){
     data: userAvatar,
     success: function(result){
       //Display success
-      $(".user-modal-alert-success").find("span").text("Thành công");
+      $(".user-modal-alert-success").find("span").text(result.message);
       $(".user-modal-alert-success").css("display", "block");
 
       //update avatar navbar src 
@@ -122,12 +128,6 @@ function callUpdateUserInfo() {
 }
 $("document").ready(function(){
   avatarOrigin = $('#user-modal-avatar').attr("src"); 
-  let originUserInfo = {
-    username: $("#input-change-username").val(),
-    gender: ($("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() : $("#input-change-gender-female").val(),
-    address: $("#input-change-address").val(),
-    phone: $("#input-change-phone").val()
-  }
   //Gọi function chỉnh ảnh phía client và gán giá trị gốc váo biến userInfo
   updateUserInfo();
 
@@ -146,6 +146,7 @@ $("document").ready(function(){
     }
     //Chỉ chỉnh thông tin text
     if(!$.isEmptyObject(userInfo)){
+      console.log("Check")
       callUpdateUserInfo();
     }
     
