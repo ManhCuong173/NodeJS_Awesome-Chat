@@ -1,6 +1,6 @@
   import express from 'express';
   import {home,auth,user} from '../controllers/index';
-  import {authValid} from '../validation/index';
+  import {authValid, userValid} from '../validation/index';
   import initPassport from '../controllers/passportController/local'
   import initPassportFacebook from '../controllers/passportController/facebook'
   import initPassportLocal from '../controllers/passportController/local'
@@ -43,7 +43,7 @@ let initRoutes = (app) => {
     failureRedirect: '/login-register'
   }));
   router.put('/user/update-avatar',auth.checkLoggin,user.updateAvatar);
-  router.put('/user/update-info', auth.checkLoggin, user.updateInfo);
+  router.put('/user/update-info', auth.checkLoggin, userValid.updateInfo, user.updateInfo);
   app.use('/', router);
 };
 
