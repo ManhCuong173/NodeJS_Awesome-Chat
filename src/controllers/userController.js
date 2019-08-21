@@ -4,6 +4,7 @@ import {transError, transSuccess} from '../../lang/vi'
 import uuidv4 from 'uuid/v4'
 import {user} from '../service/index'
 import fsExtra from 'fs-extra'
+import {validationResult} from 'express-validator/check'
 
 let storageAvatar = multer.diskStorage({
   destination: (req,file,callback) => {
@@ -66,6 +67,20 @@ let updateAvatar = (req, res) => {
 }
 
 let updateInfo = async (req, res) => {
+  let errorsArr = [];
+  let validationErrors = validationResult(req);
+  //IF
+  if(!validationErrors.isEmpty()){
+    let errors = Object.values(validationErrors.mapped());
+    errors.forEach(element => {
+      errorsArr.push(element.msg);
+    });
+    /**
+     * Flash is middleware use for attaching req and rendering to client by jade engine
+     */
+    return res.status(500).send(errorsArr);
+  }
+  //ELSE
   try {
     let updateUserItem = req.body;
     await user.updateUser(req.user._id, updateUserItem);
