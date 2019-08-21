@@ -1,12 +1,7 @@
 let userAvatar = null;
 let userInfo = {};
 let avatarOrigin = null;
-let originUserInfo = {
-  username: $("#input-change-username").val(),
-  gender: ($("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() : $("#input-change-gender-female").val(),
-  address: $("#input-change-address").val(),
-  phone: $("#input-change-phone").val()
-}
+let originUserInfo = null;
 function updateUserInfo(){
 
   $("#input-change-avatar").bind("change", function(){
@@ -53,23 +48,64 @@ function updateUserInfo(){
   });
 
   $("#input-change-username").bind("change", function(){
-    userInfo.username = $(this).val();
+    let username = $(this).val();
+    let regexUsername = new RegExp("^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$");
+    if(!regexUsername.test(username) || username.length<3 || username.length > 17){
+      alertify.notify("Usename giới hạn trong khoảng từ 3-17 kí tự và không chứa kí tự đặc biệt", "error", 7);
+      $(this).val(originUserInfo.username);
+      delete userInfo.username;
+      return false;
+    }
+
+    userInfo.username = username;
+
   });
 
   $("#input-change-gender-male").bind("click", function(){
-    userInfo.gender = $(this).val();
+    let gender = $(this).val();
+    if(gender !== "male"){
+      $(this).val(originUserInfo.gender);
+      delete userInfo.gender;
+      return false;
+    }
+
+    userInfo.gender = gender;
   });
 
   $("#input-change-gender-female").bind("click", function(){
-    userInfo.gender = $(this).val();
+    let gender = $(this).val();
+    if(gender !== "female"){
+      $(this).val(originUserInfo.gender);
+      delete userInfo.gender;
+      return false;
+    }
+
+    userInfo.gender = gender;
   });
 
   $("#input-change-address").bind("change", function(){
-    userInfo.address = $(this).val();
+    let address = $(this).val();
+    if(address.length <3 || address.length> 30) {
+      alertify.notify("Địa chỉ giới hạn trong khoảng 3-30 kí tự", "error", 7);
+      $(this).val(originUserInfo.address);
+      delete userInfo.address;
+      return false;
+    }
+
+    userInfo.address = address;
   });
 
   $("#input-change-phone").bind("change", function(){
-    userInfo.phone = $(this).val();
+    let phone = $(this).val();
+    let regexPhone = new RegExp("^(0)[0-9]{9,10}$");
+    if(!regexPhone.test(phone)){
+      alertify.notify("Số điện thoại giới hạn trong khoảng 10-11 kí tự, dùng đầu số nhà mạng Việt Nam", "error", 7);
+      $(this).val(originUserInfo.phone);
+      delete userInfo.phone;
+      return false;
+    }
+
+    userInfo.phone = phone;
   });
 };
 
@@ -127,6 +163,12 @@ function callUpdateUserInfo() {
   });
 }
 $("document").ready(function(){
+  originUserInfo = {
+    username: $("#input-change-username").val(),
+    gender: ($("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() : $("#input-change-gender-female").val(),
+    address: $("#input-change-address").val(),
+    phone: $("#input-change-phone").val()
+  }
   avatarOrigin = $('#user-modal-avatar').attr("src"); 
   //Gọi function chỉnh ảnh phía client và gán giá trị gốc váo biến userInfo
   updateUserInfo();
@@ -134,6 +176,7 @@ $("document").ready(function(){
   //Nhận 1 sự kiện click thay đổi
   $("#input-btn-update-user").bind('click', function(){
     //Check user đã chỉnh ảnh hay chưa
+    console.log(userInfo);
     if($.isEmptyObject(userInfo) && userAvatar==null){
       alertify.notify("Bạn phải chỉnh sửa trước khi lưu thông tin", "error", 7);
       return false;
