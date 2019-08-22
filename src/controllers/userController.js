@@ -90,11 +90,38 @@ let updateInfo = async (req, res) => {
     }
     return res.status(200).send(result);
   } catch (error) {
-    console.log(error);
     return res.status(500).send(error);
+  }
+};
+
+let updatePassword = async (req, res) => {
+  let errorsArr = [];
+  let validationErrors = validationResult(req);
+  //IF
+  if(!validationErrors.isEmpty()){
+    let errors = Object.values(validationErrors.mapped());
+    errors.forEach(element => {
+      errorsArr.push(element.msg);
+    });
+    /**
+     * Flash is middleware use for attaching req and rendering to client by jade engine
+     */
+    return res.status(500).send(errorsArr);
+  }
+
+  try {
+    let updateUserPassword = req.body;
+    await user.updatePassword(req.user._id, updateUserPassword);
+    let result = {
+      message: transSuccess.user_password_updated
+    };
+    return res.status(200).send(result);
+  } catch (error) {
+    res.status(500).send(error);
   }
 };
 module.exports = {
   updateAvatar: updateAvatar,
-  updateInfo: updateInfo
+  updateInfo: updateInfo,
+  updatePassword: updatePassword
 };
