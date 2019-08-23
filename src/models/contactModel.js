@@ -16,6 +16,40 @@ ContactSchema.statics = {
   createNew(item) {
     return this.create(item);
   }
+,
+/**
+ * Find all items that related with user 
+ * @param {string} userId 
+ */
+  findAllByUser(userId){
+    return this.find({
+      $or: [
+        {'userId': userId},
+        {'contactId': userId}
+      ]
+    }).exec();
+  },
+
+  /**
+   * Check exists of 2 users
+   * 
+   */
+
+   checkExist(userId, contactId){
+     return this.findOne(
+      {$or:[
+          {$and: [
+            {"userId" : userId},
+            {"contactId": contactId}
+            ]},
+          {$and: [
+            {"contactId": userId},
+            {"userId": contactId}
+            ]}
+          ] 
+      })
+   }
+  
 }
 
 module.exports = mongoose.model("contact", ContactSchema);
