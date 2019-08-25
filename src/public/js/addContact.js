@@ -5,7 +5,7 @@ function addContact() {
       if(data.success) {
         $("#find-user").find(`.user-add-new-contact[data-uid = ${targetId}]`).hide();
         $("#find-user").find(`.user-remove-request-contact[data-uid = ${targetId}]`).css('display', 'inline-block');
-        //
+        increaseNumberRequest("count-request-contact-sent");
       }
     });
   });

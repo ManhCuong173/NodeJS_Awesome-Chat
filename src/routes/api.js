@@ -49,6 +49,7 @@ let initRoutes = (app) => {
 
   router.get('/contact/find-users/:keyword', auth.checkLoggin, contactValid.findUsersContact, contact.findUsersContact);
   router.post('/contact/add-new', auth.checkLoggin, contact.addNew);
+  router.delete('/contact/remove-request-contact', auth.checkLoggin, contact.removeRequestContact);
   app.use('/', router);
 };
 

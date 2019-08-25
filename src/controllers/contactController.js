@@ -24,7 +24,7 @@ let findUsersContact = async (req, res) => {
   } catch (error) {
     return res.status(500).send(error);
   }
-}
+};
 
 let addNew = async (req, res) => {
   try {
@@ -32,14 +32,29 @@ let addNew = async (req, res) => {
     let contactId = req.body.uid;
 
     let newContact = await contact.addNew(currentUserId, contactId);
+    //Create a new document will retunrs status true or false. True appear when user click add new
+    // once time and false when they click for more than one
     console.log(newContact);
     console.log(!!newContact);
     return res.status(200).send({success: !!newContact});
   } catch (error) {
     return res.status(500).send(error);
-  }
-}
+  };
+};
+
+let removeRequestContact = async (req, res) => {
+  try {
+    let currentUserId = req.user._id;
+    let contactId = req.body.uid;
+
+    let removeContact = await contact.removeRequestContact(currentUserId, contactId);
+    return res.status(200).send({success: !!removeContact});
+  } catch (error) {
+    return res.status(500).send(error);
+  };
+};
 module.exports = {
   findUsersContact : findUsersContact,
-  addNew : addNew
+  addNew : addNew,
+  removeRequestContact : removeRequestContact
 }
