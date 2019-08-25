@@ -32,7 +32,18 @@ let addNew = (currentUserId, contactId) => {
     resolve(newContact);
   });
 }
+
+let removeRequestContact = (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let removeReq = await ContactModel.removeRequestContact(currentUserId, contactId);
+    if(removeReq.result.n === 0) {
+      return reject(false);
+    }
+    return resolve(true);
+  });
+}
 module.exports = {
   findUserContact: findUserContact,
-  addNew : addNew
+  addNew : addNew,
+  removeRequestContact : removeRequestContact
 }
