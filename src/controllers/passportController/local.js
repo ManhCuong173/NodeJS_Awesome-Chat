@@ -33,11 +33,13 @@ let initPassportLocal = () => {
 
   //Save userid to session
   passport.serializeUser((user,done) => {
+    //add userId into session request
     done(null, user._id);
   });
 
   passport.deserializeUser(async (id, done)=> {
         try {
+          //After req has an id attach, we will have req.id so that we can fully find user by get user info in database
           let user = await UserModel.findUserById(id);
           return done(null, user);
         } catch (error) {

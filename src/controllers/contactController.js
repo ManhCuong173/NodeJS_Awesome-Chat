@@ -34,8 +34,6 @@ let addNew = async (req, res) => {
     let newContact = await contact.addNew(currentUserId, contactId);
     //Create a new document will retunrs status true or false. True appear when user click add new
     // once time and false when they click for more than one
-    console.log(newContact);
-    console.log(!!newContact);
     return res.status(200).send({success: !!newContact});
   } catch (error) {
     return res.status(500).send(error);
