@@ -13,7 +13,7 @@ function addContact() {
 };
 
 socket.on("response-add-new-contact", function(user) {
-  let notif =   `<div data-uid="${ user.id }">
+  let notif =   `<div class='notif_readed_false' data-uid="${ user.id }">
                 <img class="avatar-small" src="images/users/${user.avatar}" alt=""> 
                 <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
                 </div>`;
@@ -21,6 +21,6 @@ socket.on("response-add-new-contact", function(user) {
   $('ul.list-notifications').prepend(`<li>${notif}</li>`)//Adding notif into extra-viewing-notifications-area
   increaseNumberRequest('count-request-contact-received');
 
-  increaseNumberNotification('noti_contact_counter');
-  increaseNumberNotification('noti_counter')
+  increaseNumberNotification('noti_contact_counter', 1);
+  increaseNumberNotification('noti_counter', 1)
 });

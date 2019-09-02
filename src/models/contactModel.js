@@ -62,6 +62,14 @@ ContactSchema.statics = {
         {"contactId": contactId}
       ]}
     ).exec();
+  },
+  /**
+   * add contact by user id and limit
+   * @param {stringm} userId 
+   * @param {number} limit 
+   */
+  getContacts(userId, limit) {
+    return this.find({}, {}).sort().limit().exec();
   }
   
 }

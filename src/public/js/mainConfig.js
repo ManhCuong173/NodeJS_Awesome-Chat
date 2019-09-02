@@ -2,7 +2,7 @@
  * Created by https://trungquandev.com's author on 25/02/2018.
  */
 
-const socket = io();
+const socket = io('http://localhost:3000');
 function nineScrollLeft() {
   $('.left').niceScroll({
     smoothscroll: true,
@@ -75,7 +75,7 @@ function showModalContacts() {
 function configNotification() {
   $('#noti_Button').click(function() {
     $('#notifications').fadeToggle('fast', 'linear');
-    $('.noti_counter').fadeOut('slow');
+    // $('.noti_counter').fadeOut('slow');
     return false;
   });
   $('.main-content').click(function() {
