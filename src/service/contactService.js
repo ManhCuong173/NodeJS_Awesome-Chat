@@ -2,6 +2,8 @@ import ContactModel from '../models/contactModel'
 import UserModel from '../models/userModel'
 import NotificationModel from '../models/notificationModel'
 import _ from 'lodash'
+const LIMIT_NUMBER_TAKEN = 1;
+
 
 let findUserContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
@@ -41,7 +43,7 @@ let addNew = (currentUserId, contactId) => {
     await NotificationModel.model.createNew(notificationItem);
     resolve(newContact);
   });
-}
+};
 
 let removeRequestContact = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
@@ -54,9 +56,57 @@ let removeRequestContact = (currentUserId, contactId) => {
     await NotificationModel.model.removeRequestContactNotification(currentUserId, contactId, NotificationModel.types.ADD_CONTACT);
     return resolve(true);
   });
-}
+};
+
+let getContacts = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contacts = await ContactModel.getContacts(currentUserId, LIMIT_NUMBER_TAKEN);
+      let users = contacts.map(async (notification) => {
+        return await UserModel.findUserById(contact.contactId);
+        });
+
+      resolve(users);
+    } catch (error) {
+      reject(error)
+    }
+  });
+};
+
+let getContactsSent = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contacts = await ContactModel.getContactsSent(currentUserId, LIMIT_NUMBER_TAKEN);
+      let users = contacts.map(async (notification) => {
+        return await UserModel.findUserById(contact.contactId);
+        });
+
+      resolve(users);
+    } catch (error) {
+      reject(error)
+    }
+  });
+};
+
+let getContactsReceived = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let contacts = await ContactModel.getContactsReceived(currentUserId, LIMIT_NUMBER_TAKEN);
+      let users = contacts.map(async (notification) => {
+        return await UserModel.findUserById(contact.userId);
+        });
+
+      resolve(users);
+    } catch (error) {
+      reject(error)
+    }
+  });
+};
 module.exports = {
   findUserContact: findUserContact,
   addNew : addNew,
-  removeRequestContact : removeRequestContact
+  removeRequestContact : removeRequestContact,
+  getContacts: getContacts,
+  getContactsSent: getContactsSent,
+  getContactsReceived: getContactsReceived
 }
