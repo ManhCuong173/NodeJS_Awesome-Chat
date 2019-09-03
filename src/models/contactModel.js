@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { user } from '../service/index';
 
 let  Schema = mongoose.Schema;
 
@@ -16,19 +17,19 @@ ContactSchema.statics = {
   createNew(item) {
     return this.create(item);
   }
-,
-/**
- * Find all items that related with user 
- * @param {string} userId 
- */
-  findAllByUser(userId){
-    return this.find({
-      $or: [
-        {'userId': userId},
-        {'contactId': userId}
-      ]
-    }).exec();
-  },
+  ,
+  /**
+   * Find all items that related with user 
+   * @param {string} userId 
+   */
+  findAllByUser(userId) {
+      return this.find({
+        $or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]
+      }).exec();
+    },
 
   /**
    * Check exists of 2 users
@@ -69,7 +70,33 @@ ContactSchema.statics = {
    * @param {number} limit 
    */
   getContacts(userId, limit) {
-    return this.find({}, {}).sort().limit().exec();
+    return this.find({
+      $and: [
+        {$or: [
+          {"userId": userId},
+          {"contactId": userId}
+        ]},
+        {"status": true}
+      ]
+    }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  getContactsSent(userId, limit) {
+    return this.find({
+      $and: [
+        {"userId": userId},
+        {"status": false}
+      ]
+    }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  getContactsReceived(userId, limit) {
+    return this.find({
+      $and: [
+        {"contactId": userId},
+        {"status": false}
+      ]
+    }).sort({"createdAt": -1}).limit(limit).exec();
   }
   
 }

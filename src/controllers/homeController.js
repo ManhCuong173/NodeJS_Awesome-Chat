@@ -1,9 +1,12 @@
-import {notification, contact} from '../service/index'
+import {notification,contact} from '../service/index'
 
 let homeController = async (req,res) => {
   let errors= [];
   let notifications = null ;
   let countNotifUnread = null;
+  let contacts = [];
+  let contactsSent = [];
+  let contactsReceived = [];
   try {
     //Take notifications from database by req.user._id only 10 items 
     notifications = await notification.getNotifications(req.user._id);
@@ -12,11 +15,11 @@ let homeController = async (req,res) => {
     countNotifUnread = await notification.countNotifUnread(req.user._id);
     
     //get 10 contacts on time
-    let contacts = await contact.getContacts(req.user._id)
+    contacts = await contact.getContacts(req.user._id);
     //get contacts send(10 item one time)
-    let contactsSent = await contact.getContactsSent(req.user._id)
+    contactsSent = await contact.getContactsSent(req.user._id);
     //get contacts receive(10 item one time)
-    let contactsReceived = await contact.getContactsReceived(req.user._id)
+    contactsReceived = await contact.getContactsReceived(req.user._id);
   } catch (error) {
     errors.push(error);
   }  
