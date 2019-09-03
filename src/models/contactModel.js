@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import { user } from '../service/index';
 
 let  Schema = mongoose.Schema;
 
@@ -97,6 +96,32 @@ ContactSchema.statics = {
         {"status": false}
       ]
     }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  countAllContacts(userId) {
+    return this.count({
+      $and: [
+        {$or:[
+          {"userId":userId},
+          {"contactId":userId}
+        ]},
+        {"status":true}
+      ]
+    }).exec();
+  },
+  countAllContactsSent(userId) {
+    return this.count({
+      $and: [
+        {"userId": userId},
+        {"status": false}
+      ]}).exec();
+  },
+  countAllContactsReceived(userId) {
+    return this.count({
+      $and: [
+        {"contactId": userId},
+        {"status": false}
+      ]}).exec();
   }
   
 }
