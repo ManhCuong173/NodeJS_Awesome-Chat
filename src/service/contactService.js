@@ -2,21 +2,20 @@ import ContactModel from '../models/contactModel'
 import UserModel from '../models/userModel'
 import NotificationModel from '../models/notificationModel'
 import _ from 'lodash'
-const LIMIT_NUMBER_TAKEN = 1;
+const LIMIT_NUMBER_TAKEN = 10;
 
 
 let findUserContact = (currentUserId, keyword) => {
   return new Promise(async (resolve, reject) => {
-    let deprecatedUserIds = [currentUserId];
-    let contactsByUser = await ContactModel.findAllByUser(currentUserId);
-    contactsByUser.forEach((contact) => {
-      deprecatedUserIds.push(contact.userId);
-      deprecatedUserIds.push(contact.contactId);
-    });
-    deprecatedUserIds = _.uniqBy(deprecatedUserIds);
-    let users = await UserModel.findAllForAddContact(deprecatedUserIds, keyword);
-    resolve(users);
-  })
+      let deprecatedUserIds = [currentUserId];
+      let contactsByUser = await ContactModel.findAllByUser(currentUserId);
+      contactsByUser.forEach((contact) => {
+        deprecatedUserIds.push(contact.userId);
+        deprecatedUserIds.push(contact.contactId);
+      });
+      deprecatedUserIds = _.uniqBy(deprecatedUserIds);
+      resolve(users);
+  });
 };
 
 let addNew = (currentUserId, contactId) => {
@@ -62,11 +61,15 @@ let getContacts = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let contacts = await ContactModel.getContacts(currentUserId, LIMIT_NUMBER_TAKEN);
-      let users = contacts.map(async (notification) => {
-        return await UserModel.findUserById(contact.contactId);
-        });
-
-      resolve(users);
+      let users = contacts.map(async (contact) => {
+        if(contact.contactId == currentUserId){
+          return await UserModel.findUserById(contact.userId);
+        }
+        else{
+          return await UserModel.findUserById(contact.contactId);
+        }
+      });
+      resolve(await Promise.all(users));
     } catch (error) {
       reject(error)
     }
@@ -77,11 +80,11 @@ let getContactsSent = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let contacts = await ContactModel.getContactsSent(currentUserId, LIMIT_NUMBER_TAKEN);
-      let users = contacts.map(async (notification) => {
+      let users = contacts.map(async (contact) => {
         return await UserModel.findUserById(contact.contactId);
         });
 
-      resolve(users);
+      resolve(await Promise.all(users));
     } catch (error) {
       reject(error)
     }
@@ -92,11 +95,11 @@ let getContactsReceived = (currentUserId) => {
   return new Promise(async (resolve, reject) => {
     try {
       let contacts = await ContactModel.getContactsReceived(currentUserId, LIMIT_NUMBER_TAKEN);
-      let users = contacts.map(async (notification) => {
+      let users = contacts.map(async (contact) => {
         return await UserModel.findUserById(contact.userId);
         });
 
-      resolve(users);
+      resolve(await Promise.all(users));
     } catch (error) {
       reject(error)
     }
