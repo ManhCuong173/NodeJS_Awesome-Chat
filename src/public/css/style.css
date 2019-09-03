@@ -1324,7 +1324,7 @@ label:focus,
 .mark-notif-as-read{
   text-align: right;
 }
-.read-more-notif{
+.read-more-notif, .read-more-contacts,.read-more-contacts-sent, .read-more-contacts-received{
   text-align: center;
 }
 .read-more-notif-loader {

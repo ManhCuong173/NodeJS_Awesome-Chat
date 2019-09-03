@@ -20,7 +20,8 @@ let addNewContact = (io) => {
       let currentUser = {
         id: socket.request.user._id,
         username: socket.request.user.username,
-        avatar: socket.request.user.avatar
+        avatar: socket.request.user.avatar,
+        address: (socket.request.user.address !== null) ? socket.request.user.address : ""
       };
       if(clients[data.contactId]) {
         //Function xử lý trả về thông báo cho client nếu có new notification

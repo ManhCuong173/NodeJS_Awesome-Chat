@@ -14,6 +14,7 @@ let findUserContact = (currentUserId, keyword) => {
         deprecatedUserIds.push(contact.contactId);
       });
       deprecatedUserIds = _.uniqBy(deprecatedUserIds);
+      let users = await UserModel.findAllForAddContact(deprecatedUserIds, keyword);
       resolve(users);
   });
 };
@@ -105,11 +106,47 @@ let getContactsReceived = (currentUserId) => {
     }
   });
 };
+
+let countAllContacts = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await ContactModel.countAllContacts(currentUserId);
+      resolve(count);
+    } catch (error) {
+      reject(error)
+    }
+  });
+};
+
+let countAllContactsSent = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await ContactModel.countAllContactsSent(currentUserId);
+      resolve(count);
+    } catch (error) {
+      reject(error)
+    }
+  });
+};
+
+let countAllContactsReceived = (currentUserId) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      let count = await ContactModel.countAllContactsReceived(currentUserId);
+      resolve(count);
+    } catch (error) {
+      reject(error)
+    }
+  });
+};
 module.exports = {
   findUserContact: findUserContact,
   addNew : addNew,
   removeRequestContact : removeRequestContact,
   getContacts: getContacts,
   getContactsSent: getContactsSent,
-  getContactsReceived: getContactsReceived
+  getContactsReceived: getContactsReceived,
+  countAllContacts: countAllContacts,
+  countAllContactsSent: countAllContactsSent,
+  countAllContactsReceived: countAllContactsReceived
 }
