@@ -31,7 +31,7 @@ $(document).ready(function() {
                         <div class="user-talk" data-uid="${user._id}">
                           Trò chuyện
                         </div>
-                        <div class="user-remove-contact action-danger" data-uid="${user._id}">
+                        <div class="user-remove-contact action-danger display_important" data-uid="${user._id}">
                           Xóa liên hệ
                         </div>
                     </div>
