@@ -20,7 +20,7 @@ let config = (app) => {
     store: sessionStore,
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000*60*30
+      maxAge: 1000*60*60
     }
   }));
 };
