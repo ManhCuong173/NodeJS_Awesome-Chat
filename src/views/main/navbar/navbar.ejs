@@ -33,9 +33,9 @@
                     <a href="#contactsModal" data-toggle="modal" title="Quản lý liên lạc" id="show-modal-contacts">
                         <i class="fa fa-user-plus"></i>
                         <% if(countAllContactsSent + countAllContactsReceived > 0) {%>
-                        <div class="noti_counter">
-                            <%= countAllContactsSent+countAllContactsReceived %>
-                        </div>
+                            <div class="noti_contact_counter">
+                                <%= countAllContactsSent+countAllContactsReceived %>
+                            </div>
                         <% }else { %>
                             <div class="noti_contact_counter display_none"></div>
                         <% } %>
@@ -45,11 +45,11 @@
                     <a href="javascript:void(0)" id="noti_Button" data-toggle="modal" title="Thông báo">
                         <i class="fa fa-globe"></i>
                         <% if(countNotifUnread > 0) {%>
-                        <div class="noti_counter">
-                            <%= countNotifUnread %>
-                        </div>
+                            <div class="noti_counter">
+                                <%= countNotifUnread %>
+                            </div>
                         <% }else { %>
-                        <div class="noti_counter display_none"></div>
+                            <div class="noti_counter display_none"></div>
                         <% } %>
                         <div id="noti_Container">
                             <div id="notifications">

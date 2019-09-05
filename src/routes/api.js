@@ -50,6 +50,9 @@ let initRoutes = (app) => {
   router.get('/contact/find-users/:keyword', auth.checkLoggin, contactValid.findUsersContact, contact.findUsersContact);
   router.post('/contact/add-new', auth.checkLoggin, contact.addNew);
   router.delete('/contact/remove-request-contact', auth.checkLoggin, contact.removeRequestContact);
+  router.get('/contact/read-more-contacts', auth.checkLoggin, contact.readMoreContacts);
+  router.get('/contact/read-more-contacts-sent', auth.checkLoggin, contact.readMoreContactsSent);
+  router.get('/contact/read-more-contacts-received', auth.checkLoggin, contact.readMoreContactsReceived);
 
   router.get('/notification/read-more', auth.checkLoggin, notification.readMore);
   router.put('/notification/mark-all-as-read', auth.checkLoggin, notification.markAllAsRead);

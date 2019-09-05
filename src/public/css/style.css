@@ -1295,7 +1295,7 @@ label:focus,
 }
 
 .display_none {
-  display: none;
+  display: none!important;
 }
 
 #noti_Button:hover{
@@ -1354,6 +1354,100 @@ label:focus,
 .read-more-notif-loader div:nth-child(3) {
   animation-delay: -0.15s;
 }
+
+/*
+link read more contacts
+*/
+.read-more-contacts-loader {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.read-more-contacts-loader div {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin: 6px;
+  border: 3px solid #337ab7;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #337ab7 transparent transparent transparent;
+}
+.read-more-contacts-loader div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.read-more-contacts-loader div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.read-more-contacts-loader div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+/*
+link read more contacts sent
+*/
+.read-more-contacts-sent-loader {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.read-more-contacts-sent-loader div {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin: 6px;
+  border: 3px solid #337ab7;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #337ab7 transparent transparent transparent;
+}
+.read-more-contacts-sent-loader div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.read-more-contacts-sent-loader div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.read-more-contacts-sent-loader div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
+/*
+link read more contacts sent
+*/
+.read-more-contacts-received-loader {
+  display: inline-block;
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+.read-more-contacts-received-loader div {
+  box-sizing: border-box;
+  display: none;
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  margin: 6px;
+  border: 3px solid #337ab7;
+  border-radius: 50%;
+  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: #337ab7 transparent transparent transparent;
+}
+.read-more-contacts-received-loader div:nth-child(1) {
+  animation-delay: -0.45s;
+}
+.read-more-contacts-received-loader div:nth-child(2) {
+  animation-delay: -0.3s;
+}
+.read-more-contacts-received-loader div:nth-child(3) {
+  animation-delay: -0.15s;
+}
+
 @keyframes lds-ring {
   0% {
     transform: rotate(0deg);
