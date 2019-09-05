@@ -22,7 +22,6 @@ body {
   text-rendering: optimizeLegibility;
   font-family: 'Source Sans Pro', sans-serif;
   font-weight: 400;
-  background-image: url("../images/background/image.jpg");
   background-size: cover;
   background-repeat: none;
 }
@@ -196,9 +195,8 @@ label:focus,
 .contactPanel .user-add-new-contact,
 .contactPanel .user-talk,
 .contactPanel .user-remove-contact,
-.contactPanel .user-remove-request-contact,
+.contactPanel .user-remove-request-contact-sent,
 .contactPanel .user-acccept-contact-received,
-.contactPanel .user-remove-request-sent,
 .contactPanel .user-reject-request-contact-received {
   box-sizing: border-box;
   display: inline-flex;
@@ -228,7 +226,7 @@ label:focus,
   margin: 10px 0px 5px 2px;
 }
 
-.contactPanel .user-remove-request-contact {
+.contactPanel .user-remove-request-contact-sent {
   display: none;
 }
 
@@ -829,7 +827,7 @@ label:focus,
 
 .right .chat {
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
   position: relative;
   padding: 0 35px 10px;
   border-width: 1px 1px 1px 0;
@@ -1455,4 +1453,8 @@ link read more contacts sent
   100% {
     transform: rotate(360deg);
   }
+}
+
+.display_important{
+  display:inline-block!important
 }

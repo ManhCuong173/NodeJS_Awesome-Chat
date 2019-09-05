@@ -5,7 +5,7 @@ $(document).ready(function () {
     $('#link-read-more-contacts-received').css('display', 'none');
     $('.read-more-contacts-received-loader div').css('display', 'block');
 
-    function getContactsUser() {
+    function getContactsUserReceived() {
       $.get(`/contact/read-more-contacts-received?skipNumber=${skipNumber}`, function (newContactsUser) {
         if (!newContactsUser.length) {
           alertify.notify("Bạn không còn bạn bè nào để xem thêm", "error", 7);
@@ -13,7 +13,7 @@ $(document).ready(function () {
           $('.read-more-contacts-received-loader div').css('display', 'none');
           return false;
         }
-        function templateUser(user) {
+        function templateReadMoreContactReceived(user) {
           return `<li class="_contactList" data-uid="${user._id}">
                     <div class="contactPanel">
                         <div class="user-avatar">
@@ -39,13 +39,13 @@ $(document).ready(function () {
                   </li>`
         }
         newContactsUser.forEach(user => {
-          $('#request-contact-received').find('ul').append(templateUser(user));
+          $('#request-contact-received').find('ul').append(templateReadMoreContactReceived(user));
         });
         $('#link-read-more-contacts-received').css('display', 'block');
         $('.read-more-contacts-received-loader div').css('display', 'none');
       });
     }
 
-    setTimeout(getContactsUser, 1000);
+    setTimeout(getContactsUserReceived, 1000);
   });
 });

@@ -3,6 +3,7 @@ function increaseNumberNotification(className, number) {
   currentValue+= number;
   if(currentValue>0){
     $(`.${className}`).css('display', 'block').html(currentValue);
+    $(`.${className}`).removeClass('display_none');
   }
   else 
   {
@@ -18,5 +19,6 @@ function decreaseNumberNotification(className, number) {
   }
   else{
     $(`.${className}`).css('display', 'block').html(currentValue);
+    $(`.${className}`).removeClass('display_none');
   }
 }

@@ -2,7 +2,7 @@
  * 
  * @param io from socket.io 
  */
-let removeRequestContact = (io) => {
+let removeRequestContactSent = (io) => {
   /**
    * Idea: Tạo 1 đối tượng có giá trị là 1 mảng, 1 user mới đăng nhập vào 
    * chúng ta sẽ cho nó có 1 mảng, mảng chứa các socketid user đó có (Trường hợp 1 user mở nhiều tab)
@@ -19,7 +19,7 @@ let removeRequestContact = (io) => {
     else{//Không thì tạo mới 
       clients[currentUserId] = [socket.id];
     }
-    socket.on('remove-request-contact', (data) => {
+    socket.on('remove-request-contact-sent', (data) => {
       let currentUser = {
         id: socket.request.user._id,
         username: socket.request.user.username,
@@ -28,7 +28,7 @@ let removeRequestContact = (io) => {
 
      if(clients[data.contactId]) {
        clients[data.contactId].forEach((socketId) => {
-        io.sockets.connected[socketId].emit('response-remove-request-contact', currentUser);
+        io.sockets.connected[socketId].emit('response-remove-request-contact-sent', currentUser);
        });
      }
     });
@@ -46,4 +46,4 @@ let removeRequestContact = (io) => {
   })
 }
 
-module.exports = removeRequestContact;
+module.exports = removeRequestContactSent;
