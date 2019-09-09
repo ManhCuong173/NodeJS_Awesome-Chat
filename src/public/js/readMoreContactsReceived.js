@@ -28,7 +28,7 @@ $(document).ready(function () {
                         <div class="user-address">
                           <span>${user.address}</span>
                         </div>
-                        <div class="user-acccept-contact-received" data-uid="${user._id}">
+                        <div class="user-accept-contact-received" data-uid="${user._id}">
                             Chấp nhận
                         </div>
                         <div class="user-reject-request-contact-received action-danger"
@@ -41,6 +41,10 @@ $(document).ready(function () {
         newContactsUser.forEach(user => {
           $('#request-contact-received').find('ul').append(templateReadMoreContactReceived(user));
         });
+
+        removeRequestContactReceived();
+        approveRequestContactReceived();
+
         $('#link-read-more-contacts-received').css('display', 'block');
         $('.read-more-contacts-received-loader div').css('display', 'none');
       });

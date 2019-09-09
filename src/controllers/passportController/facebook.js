@@ -40,7 +40,6 @@ let initPassportFacebook = () => {
       let newUser = newUserItem.createNew(newUserItem);
       if(user) return done(null,newUser,req.flash('success', transSuccess.login_success(newUser.username)));
     } catch (error) {
-      console.log(error);
       //When errors from user don't happen. It's exactly from server's error
       return done(null, false, req.flash('errors', transError.server_error));      
     }

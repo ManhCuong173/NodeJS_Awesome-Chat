@@ -35,7 +35,7 @@ ContactSchema.statics = {
    * 
    */
 
-   checkExist(userId, contactId){
+  checkExist(userId, contactId){
      return this.findOne(
       {$or:[
           {$and: [
@@ -56,13 +56,59 @@ ContactSchema.statics = {
    * @param {string} contactId 
    */
   removeRequestContactSent(userId, contactId) {
+      return this.remove({
+        $and: [
+          {"userId": userId},
+          {"contactId": contactId},
+          {"status": false}
+        ]}
+      ).exec();
+    },
+
+  removeRequestContactReceived(userId, contactId) {
+      return this.remove({
+        $and: [
+          {"userId": contactId},
+          {"contactId": userId},
+          {"status": false}
+        ]}
+      ).exec();
+    },
+    /**
+     * Approve contact
+     * @param {string} userId 
+     * @param {string} contactId 
+     */
+  approveRequestContactReceived(userId, contactId) {
+      return this.update({
+        $and: [
+          {"userId": contactId},
+          {"contactId": userId},
+          {"status": false}
+        ]},
+        {"status": true}
+      ).exec();
+    },
+  /**
+   * Remove Contact
+   * @param {string} userId 
+   * @param {string} contactId 
+   */
+  removeContact(userId, contactId) {
     return this.remove({
-      $and: [
-        {"userId": userId},
-        {"contactId": contactId}
-      ]}
-    ).exec();
-  },
+      $or:[
+        {$and:[
+          {"userId": contactId},
+          {"contactId": userId}
+        ]},
+        {$and:[
+          {"userId": userId},
+          {"contactId": contactId}
+        ]}
+      ],
+      "status": true}
+      ).exec();
+    },
   /**
    * add contact by user id and limit
    * @param {stringm} userId 

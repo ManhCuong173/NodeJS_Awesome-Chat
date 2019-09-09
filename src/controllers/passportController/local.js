@@ -24,8 +24,6 @@ let initPassportLocal = () => {
       return done(null,user,req.flash('success', transSuccess.login_success(user.username)));
 
     } catch (error) {
-      console.log(error);
-
       //When errors from user don't happen. It's exactly from server's error
       return done(null, false, req.flash('errors', transError.server_error));      
     }

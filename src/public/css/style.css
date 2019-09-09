@@ -196,7 +196,7 @@ label:focus,
 .contactPanel .user-talk,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact-sent,
-.contactPanel .user-acccept-contact-received,
+.contactPanel .user-accept-contact-received,
 .contactPanel .user-reject-request-contact-received {
   box-sizing: border-box;
   display: inline-flex;
@@ -682,7 +682,7 @@ label:focus,
 }
 
 .left a.create-group-chat {
-  display: none;
+  display: block;
   float: left;
   width: 40px;
   height: 40px;
@@ -1322,7 +1322,13 @@ label:focus,
 .mark-notif-as-read{
   text-align: right;
 }
-.read-more-notif, .read-more-contacts,.read-more-contacts-sent, .read-more-contacts-received{
+.read-more-notif, 
+.read-more-contacts,
+.read-more-contacts-sent, 
+.read-more-contacts-received,
+.read-more-all-chat,
+.read-more-user-chat,
+.read-more-group-chat{
   text-align: center;
 }
 .read-more-notif-loader {
@@ -1457,4 +1463,7 @@ link read more contacts sent
 
 .display_important{
   display:inline-block!important
+}
+.tab-content>.active{
+  background-color: #ffff;
 }

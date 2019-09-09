@@ -5,6 +5,8 @@ function addContact() {
       if(data.success) {
         $("#find-user").find(`.user-add-new-contact[data-uid = ${targetId}]`).hide();
         $("#find-user").find(`.user-remove-request-contact-sent[data-uid = ${targetId}]`).css('display', 'inline-block');
+        
+        increaseNumberNotification('noti_contact_counter', 1);
         increaseNumberRequest("count-request-contact-sent");
 
         let userInfoHTML = $('#find-user').find(`ul li[data-uid= ${targetId}]`).get(0).outerHTML;
@@ -17,7 +19,7 @@ function addContact() {
 };
 
 socket.on("response-add-new-contact", function(user) {
-  let notif =   `<div class='notif_readed_false' data-uid="${ user.id }">
+  let notif =   `<div class='notif_readed_false' data-uid="${user.id}">
                 <img class="avatar-small" src="images/users/${user.avatar}" alt=""> 
                 <strong>${user.username}</strong> đã gửi cho bạn một lời mời kết bạn!
                 </div>`;
@@ -28,6 +30,7 @@ socket.on("response-add-new-contact", function(user) {
   increaseNumberNotification('noti_contact_counter', 1);
   increaseNumberNotification('noti_counter', 1);
 
+  
   let userInfoHTML = `<li class="_contactList" data-uid="${user.id}">
                         <div class="contactPanel">
                           <div class="user-avatar">
@@ -42,7 +45,7 @@ socket.on("response-add-new-contact", function(user) {
                           <div class="user-address">
                               <span>${user.address}</span>
                           </div>
-                          <div class="user-acccept-contact-received" data-uid="${user.id}">
+                          <div class="user-accept-contact-received" data-uid="${user.id}">
                               Chấp nhận
                           </div>
                           <div class="user-reject-request-contact-received action-danger"
@@ -52,4 +55,6 @@ socket.on("response-add-new-contact", function(user) {
                         </div>
                       </li>`
   $('#request-contact-received').find('ul').prepend(userInfoHTML);
+  removeRequestContactReceived();
+  approveRequestContactReceived();
 });
