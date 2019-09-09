@@ -40,6 +40,7 @@ $(document).ready(function() {
         newContactsUser.forEach(user => {
           $('#contacts').find('ul').append(templateUser(user));
         });
+        removeContact();
         $('#link-read-more-contacts').css('display', 'block');
         $('.read-more-contacts-loader div').css('display', 'none');
       }); 

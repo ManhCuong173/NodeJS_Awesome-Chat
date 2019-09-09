@@ -9,6 +9,9 @@ function removeRequestContactSent() {
         if (data.success) {
           $("#find-user").find(`.user-remove-request-contact-sent[data-uid = ${targetId}]`).hide();
           $("#find-user").find(`.user-add-new-contact[data-uid = ${targetId}]`).css('display', 'inline-block');
+          
+          decreaseNumberNotification('noti_contact_counter', 1);
+          decreaseNumberNotification('noti_counter', 1);
           decreaseNumberRequest("count-request-contact-sent");
 
           $('#request-contact-sent').find(`li[data-uid=${targetId}]`).remove();
@@ -32,4 +35,4 @@ socket.on("response-remove-request-contact-sent", function (user) {
 
 $(document).ready(function() {
   removeRequestContactSent();
-})
+});

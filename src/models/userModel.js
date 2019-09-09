@@ -7,7 +7,7 @@ let UserSchema = new Schema({
   username: String,
   gender: {type: String, default: "male"},
   phone: {type: String, default: null},
-  address: {type: String, default: null},
+  address: {type: String, default: " "},
   avatar: {type: String, default: "avatar-default.jpg"},
   role: {type: String, default: "user"},
   local: {
