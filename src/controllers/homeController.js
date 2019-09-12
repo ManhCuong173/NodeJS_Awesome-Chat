@@ -1,5 +1,4 @@
 import {notification, contact, message} from '../service/index'
-import { get } from 'http';
 
 let homeController = async (req,res) => {
   let errors = [];
@@ -19,7 +18,7 @@ let homeController = async (req,res) => {
     let  contactsReceived = await contact.getContactsReceived(req.user._id)
 
      //count all contacts
-    let  countAllContacts = await contact.countAllContacts(req.user._id);
+    let countAllContacts = await contact.countAllContacts(req.user._id);
     let countAllContactsSent = await contact.countAllContactsSent(req.user._id);
     let countAllContactsReceived = await contact.countAllContactsReceived(req.user._id);
 

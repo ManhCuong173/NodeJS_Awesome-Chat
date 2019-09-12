@@ -1467,3 +1467,8 @@ link read more contacts sent
 .tab-content>.active{
   background-color: #ffff;
 }
+
+#screen-chat{
+  width: 100%;
+  height: 100%;
+}
