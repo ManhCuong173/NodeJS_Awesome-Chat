@@ -151,7 +151,12 @@ function changeTypeChat() {
       $('.create-group-chat').show();
     }
   });
+};
 
+function changeScreenChat() {
+  $('.room-chat').unbind('click').on('click', function(){
+    $(this).tab("show");
+  })
 }
 
 $(document).ready(function() {
@@ -186,4 +191,7 @@ $(document).ready(function() {
 
    //Thay đổi kiểu trò chuyện
    changeTypeChat();
+
+   //Thay đổi màn hình chat
+   changeScreenChat();
 });
