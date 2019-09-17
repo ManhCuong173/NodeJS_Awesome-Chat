@@ -1,4 +1,6 @@
 import {notification, contact, message} from '../service/index'
+import { bufferToBase64 } from './../helpers/clientHelper'
+
 
 let homeController = async (req,res) => {
   let errors = [];
@@ -26,6 +28,10 @@ let homeController = async (req,res) => {
     let allConversations = getAllConversationItems.allConversations;
     let userConversations = getAllConversationItems.userConversations;
     let groupConversations = getAllConversationItems.groupConversations;
+
+    //all messages with conversations, max 30 items
+    let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
+
     
      res.render('main/home/home',{
       errors: req.flash('errors'),
@@ -42,7 +48,9 @@ let homeController = async (req,res) => {
       countAllContactsReceived: countAllContactsReceived,
       allConversations: allConversations,
       userConversations: userConversations,
-      groupConversations: groupConversations
+      groupConversations: groupConversations,
+      allConversationWithMessages: allConversationWithMessages,
+      bufferToBase64: bufferToBase64
     });
 
   } catch (error) {
