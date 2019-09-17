@@ -41,24 +41,24 @@ let getAllConversationItems = (currentUserId) => {
         return -item.updatedAt;
       });
       
-      //to get messages to apply in screen chat
+      //Lấy tin nhắn hiển thị từng phần tử chat
       let allConversationWithMessagePromise = allConversations.map(async (conversation) => {
         let getMessages = await MessageModel.model.getMessages(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
         conversation = conversation.toObject();
         conversation.messages = getMessages;
-
         return conversation; 
       })
 
-      let allConversationWithMessage = await Promise.all(allConversationWithMessagePromise);
-      allConversationWithMessage = _.sortBy(allConversationWithMessage, (item) =>  {
+      let allConversationWithMessages = await Promise.all(allConversationWithMessagePromise);
+      
+      allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) =>  {
         return -item.updatedAt;
       })
-      
       resolve({
         userConversations: userConversations,
         groupConversations: groupConversations,
-        allConversations: allConversations
+        allConversations: allConversations,
+        allConversationWithMessages: allConversationWithMessages
       });
     } catch (error) {
       reject(error);

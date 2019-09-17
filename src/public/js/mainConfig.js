@@ -4,6 +4,9 @@
 
 const socket = io('http://localhost:3000');
 function nineScrollLeft() {
+  $('.left').on('mouseover', function() {
+    $(this).getNiceScroll().resize();
+  });
   $('.left').niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -14,6 +17,9 @@ function nineScrollLeft() {
 }
 
 function nineScrollRight() {
+  $('.right .chat').on('mouseover', function() {
+    $(this).getNiceScroll().resize();
+  });
   $('.right .chat').niceScroll({
     smoothscroll: true,
     horizrailenabled: false,
@@ -155,11 +161,15 @@ function changeTypeChat() {
 
 function changeScreenChat() {
   $('.room-chat').unbind('click').on('click', function(){
+    $('.person').removeClass('active');
+    $(this).find('li').addClass('active');
     $(this).tab("show");
   })
-}
+};
 
 $(document).ready(function() {
+
+ 
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
 
@@ -194,4 +204,8 @@ $(document).ready(function() {
 
    //Thay đổi màn hình chat
    changeScreenChat();
+
+   //Luôn click vào khung chat đầu tiên khi reload trang
+   $('ul.people').find('li').first().click();
+
 });
