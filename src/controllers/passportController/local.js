@@ -38,7 +38,7 @@ let initPassportLocal = () => {
   passport.deserializeUser(async (id, done)=> {
         try {
           //After req has an id attach, we will have req.id so that we can fully find user by get user info in database
-          let user = await UserModel.findUserById(id);
+          let user = await UserModel.findUserByIdForSessionToUse(id);
           return done(null, user);
         } catch (error) {
           return done(false, null);

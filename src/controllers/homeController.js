@@ -31,7 +31,6 @@ let homeController = async (req,res) => {
 
     //all messages with conversations, max 30 items
     let allConversationWithMessages = getAllConversationItems.allConversationWithMessages;
-
     
      res.render('main/home/home',{
       errors: req.flash('errors'),
