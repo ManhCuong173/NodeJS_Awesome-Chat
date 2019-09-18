@@ -52,7 +52,7 @@ let initPassportFacebook = () => {
 
   passport.deserializeUser(async (id, done)=> {
         try {
-          let user = await UserModel.findUserById(id);
+          let user = await UserModel.findUserByIdForSessionToUse(id);
           return done(null, user);
         } catch (error) {
           return done(false, null);
