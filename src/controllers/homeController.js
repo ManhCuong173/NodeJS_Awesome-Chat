@@ -1,5 +1,5 @@
 import {notification, contact, message} from '../service/index'
-import { bufferToBase64 } from './../helpers/clientHelper'
+import { bufferToBase64, lastItemOfArray, convertTimestamptoHumenstamp } from './../helpers/clientHelper'
 
 
 let homeController = async (req,res) => {
@@ -45,13 +45,11 @@ let homeController = async (req,res) => {
       countAllContacts: countAllContacts,
       countAllContactsSent: countAllContactsSent,
       countAllContactsReceived: countAllContactsReceived,
-      allConversations: allConversations,
-      userConversations: userConversations,
-      groupConversations: groupConversations,
       allConversationWithMessages: allConversationWithMessages,
-      bufferToBase64: bufferToBase64
+      bufferToBase64: bufferToBase64,
+      lastItemOfArray: lastItemOfArray,
+      convertTimestamptoHumenstamp: convertTimestamptoHumenstamp
     });
-
   } catch (error) {
     errors.push(error);
   }  

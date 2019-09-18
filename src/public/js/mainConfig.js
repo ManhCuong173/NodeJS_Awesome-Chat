@@ -172,6 +172,8 @@ function changeScreenChat() {
 
     let dataId = $(this).find('li').data('chat');
     nineScrollRight(dataId);
+    // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
+    enableEmojioneArea(dataId);
   })
 };
 
@@ -187,8 +189,6 @@ $(document).ready(function () {
   // Cấu hình thanh cuộn
   nineScrollLeft();
 
-  // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
-  enableEmojioneArea("17071995");
 
   // Icon loading khi chạy ajax
   ajaxLoading();

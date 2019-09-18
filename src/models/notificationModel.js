@@ -62,10 +62,6 @@ NotificationSchema.statics = {
    */
   markAllAsRead(userId, targetUsers) {
     return this.updateMany({
-      $and: [
-        {'receiverId': userId},
-        {'senderId': {$in: targetUsers}}
-      ]
     }, {
       "isRead" : true
     }).exec();
