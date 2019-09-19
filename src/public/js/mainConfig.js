@@ -27,8 +27,8 @@ function nineScrollRight(divId) {
   $(`.right .chat[data-chat = ${divId}] `).scrollTop($(`.right .chat[data-chat = ${divId}] `)[0].scrollHeight);
 }
 
-function enableEmojioneArea(chatId) {
-  $('.write-chat[data-chat="' + chatId + '"]').emojioneArea({
+function enableEmojioneArea(divId) {
+  $(`#write-chat-${divId}`).emojioneArea({
     standalone: false,
     pickerPosition: 'top',
     filtersPosition: 'bottom',
@@ -39,8 +39,16 @@ function enableEmojioneArea(chatId) {
     search: false,
     shortnames: false,
     events: {
+
+      //Gán giá trị vào thẻ input đã bị ẩn
       keyup: function (editor, event) {
-        $('.write-chat').val(this.getText());
+        $(`#write-chat-${divId}`).val(this.getText());
+      },
+
+      click: function() {
+
+        //Bật lắng nghe DOM cho việc chat tin nhắn văn bản và emoji
+        textAndEmojiChat(divId);
       }
     },
   });
@@ -213,6 +221,6 @@ $(document).ready(function () {
   changeScreenChat();
 
   //Luôn click vào khung chat đầu tiên khi reload trang
-  $('ul.people').find('li').first().click();
+  $('ul.people').find('a').first().click();
 
 });
