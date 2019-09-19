@@ -2,6 +2,8 @@ import ContactModel from './../models/contactModel'
 import UserModel from './../models/userModel'
 import ChatGroupModel from './../models/chatGroupModel'
 import MessageModel from './../models/messageModel'
+import { transError } from './../../lang/vi'
+import { app } from './../config/app'
 import _ from 'lodash'
 
 let LIMIT_CONVERSATION_TAKEN = 10;
@@ -16,14 +18,14 @@ let getAllConversationItems = (currentUserId) => {
       let contacts = await ContactModel.getContacts(currentUserId, LIMIT_CONVERSATION_TAKEN);
       let usersConversationsPromise = contacts.map(async (contact) => {
         if (contact.contactId == currentUserId) {
-          let getUserContact =  await UserModel.getNormalUserDataById(contact.userId);
+          let getUserContact = await UserModel.getNormalUserDataById(contact.userId);
           //Vì 2 dữ liệu từ 2 model này về cùng 1 kiểu dữ liệu từ mongo cho nên k cần chuyển đổi getUserContact về object để gán thêm property
           // => getUserContact.toObject(); được dùng để chuyển đổi
           getUserContact.updatedAt = contact.updatedAt;
           return getUserContact;
         }
         else {
-          let getUserContact =  await UserModel.getNormalUserDataById(contact.contactId);
+          let getUserContact = await UserModel.getNormalUserDataById(contact.contactId);
           getUserContact.updatedAt = contact.updatedAt;
           return getUserContact;
         }
@@ -40,24 +42,24 @@ let getAllConversationItems = (currentUserId) => {
         //Dấu '-' sẽ sắp xếp theo chiều giảm dần
         return -item.updatedAt;
       });
-      
+
       //Lấy tin nhắn hiển thị từng phần tử chat
       let allConversationWithMessagePromise = allConversations.map(async (conversation) => {
         conversation = conversation.toObject();
-        if(conversation.members) {
+        if (conversation.members) {
           let getMessages = await MessageModel.model.getMessagesInGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
           conversation.messages = getMessages;
         }
-        else{
+        else {
           let getMessages = await MessageModel.model.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
           conversation.messages = getMessages;
         }
-        return conversation; 
+        return conversation;
       })
 
       let allConversationWithMessages = await Promise.all(allConversationWithMessagePromise);
-      
-      allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) =>  {
+
+      allConversationWithMessages = _.sortBy(allConversationWithMessages, (item) => {
         return -item.updatedAt;
       })
       resolve({
@@ -72,6 +74,87 @@ let getAllConversationItems = (currentUserId) => {
   })
 };
 
+/**
+ * Add new message text and emoji
+ * @param {Object} sender 
+ * @param {string} receiverId 
+ * @param {string} messageVal 
+ * @param {boolean} isChatGroup 
+ */
+let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      //Check that sent up message is from group or not
+      if (isChatGroup) {
+        let getChatGroupReceiver = await ChatGroupModel.getChatGroupById(receiverId);
+
+        //If not finding conversation
+        if (!getChatGroupReceiver) {
+          reject(transError.conversation_not_founded);
+        }
+
+        let receiver = {
+          id: receiverId,
+          name: getChatGroupReceiver.name,
+          avatar: app.general_avatar_group_chat
+        };
+
+        let newMessageItem = {
+          senderId: sender.id,
+          receiverId: receiverId,
+          conversationType: MessageModel.conversationType.GROUP,
+          messageType: MessageModel.messageType.TEXT,
+          sender: sender,
+          receiver:receiver,
+          text: messageVal,
+          createdAt: Date.now()
+        };
+
+        //Create new message
+        let newMessage = await MessageModel.model.createNew(newMessageItem);
+
+        //Update group chat
+        await ChatGroupModel.updateWhenHasNewMessage(receiverId, getChatGroupReceiver.messageAmount + 1);
+
+        resolve(newMessageItem);
+      }
+      else {
+        let getChatUserReceiver = UserModel.getNormalUserDataById(receiverId);
+        if (!getChatUserReceiver) {
+          reject(transError.conversation_not_founded);
+        }
+
+        let receiver = {
+          id: getChatUserReceiver._id,
+          name: getChatUserReceiver.username,
+          avatar: getChatUserReceiver.avatar
+        };
+
+        let newMessageItem = {
+          senderId: sender.id,
+          receiverId: receiverId,
+          conversationType: MessageModel.conversationType.PERSONAL,
+          messageType: MessageModel.messageType.TEXT,
+          sender: sender,
+          receiver:receiver,
+          text: messageVal,
+          createdAt: Date.now()
+        };
+        //Create new message
+        let newMessage = await MessageModel.model.createNew(newMessageItem);
+
+        //Update contact
+        await ContactModel.updateWhenHasNewMessage(sender.id, getChatUserReceiver._id);
+
+        resolve(newMessageItem);
+
+      }
+    } catch (error) {
+      reject(error);
+    }
+  })
+}
 module.exports = {
-  getAllConversationItems: getAllConversationItems
+  getAllConversationItems: getAllConversationItems,
+  addNewTextEmoji: addNewTextEmoji
 }

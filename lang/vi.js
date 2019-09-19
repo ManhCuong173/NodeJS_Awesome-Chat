@@ -7,7 +7,8 @@ export const transValidation = {
   update_gender:"Dữ liệu gốc có vấn đề",
   update_address:"Địa chỉ giới hạn trong khoảng 3-30 kí tự",
   update_phone:"Số điện thoại giới hạn trong khoảng 10-11 kí tự, dùng đầu số nhà mạng Việt Nam",
-  search_contact_incorrect: "Lỗi từ khóa tìm kiếm, không cho phép nhập ký tự đặc biệt"
+  search_contact_incorrect: "Lỗi từ khóa tìm kiếm, không cho phép nhập ký tự đặc biệt",
+  message_text_emoji_incorrect: "Tin nhắn không hợp lệ! "
 }
 
 export const transError = {
@@ -20,7 +21,8 @@ export const transError = {
   server_error: "Lỗi từ phía server. Bạn đăng nhập lại một lần nữa",
   avatar_type: "Kiểu file không hoợp lệ, chỉ chấp nhận kiểu file png, jpg, jpeg",
   avatar_size: "Ảnh upload chỉ tối đa cho phép 1MB",
-  user_current_password_failed: "Mật khẩu hiện tại không chính xác"
+  user_current_password_failed: "Mật khẩu hiện tại không chính xác",
+  conversation_not_founded: "Không tìm thấy cuộc trò chuyện này"
 }
 
 export const transSuccess = {
