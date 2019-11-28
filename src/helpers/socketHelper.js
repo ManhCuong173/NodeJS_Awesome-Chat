@@ -9,7 +9,8 @@ export let pushSocketIdToArray = (clients, userId, socketId) => {
   
   return clients;
 };
-export let emitNotifyToArray = (clients, currentUser, io, eventName, dataId) => {
+export let emitNotifyToArray = (clients, dataId, io, eventName,currentUser) => {
+
   clients[dataId].forEach((socketId) => {
     io.sockets.connected[socketId].emit(eventName,currentUser);
   });
@@ -17,11 +18,10 @@ export let emitNotifyToArray = (clients, currentUser, io, eventName, dataId) => 
   return clients;
 }
 export let removeSocketIdFromArray = (clients, userId, socketIdConnect) => {
-    //Nếu mảng của user đó không còn thì xóa luôn user
+    //Nếu mảng của user đó không còn phần thì xóa luôn user
     if(!clients[userId].length) {
     delete clients[userId];
-    }
-    else{
+    } else{
     //Xóa những socketId dư vì nhũng socketId đó không còn online thì là trash
     clients[userId] = clients[userId].filter(socketId => socketId !== socketIdConnect);
     };
