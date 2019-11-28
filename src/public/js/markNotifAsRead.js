@@ -24,7 +24,6 @@ $(document).ready(function() {
       targetUser.push($(notification).data('uid'));
     });
 
-    console.log(targetUser);
     if(!targetUser.length) {
       alertify.notify("Bạn không còn thông báo nào để đọc", 'error', 7);
     }
@@ -37,8 +36,7 @@ $(document).ready(function() {
     let targetUser = [];
     $("ul.list-notifications").find('li>div.notif_readed_false').each(function(index, notification) {
       targetUser.push($(notification).data('uid'));
-    }); 
-    console.log(targetUser);   
+    });  
     if(!targetUser.length) {
       alertify.notify("Bạn không còn thông báo nào để đọc", 'error', 7);
     }

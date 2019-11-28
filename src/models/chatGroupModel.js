@@ -26,13 +26,18 @@ ChatGroupSchema.statics = {
     return this.findById(receiverId).exec();
   },
   /**
-   * 
+   * Update group chat when has new message
    * @param {string} receiverId 
    * @param {number} messageAmout 
    */
   updateWhenHasNewMessage(receiverId, messageAmout) {
     return this.findByIdAndUpdate(receiverId, {"messageAmount": messageAmout,"updatedAt": Date.now()
   }).exec();
+  },
+
+  getChatGroupIdsByUser(userId) {
+    return this.find({"members": {$elemMatch: {"userId": userId}}}, {"_id": 1})
+    .exec();
   }
 }
 

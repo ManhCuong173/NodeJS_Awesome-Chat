@@ -48,11 +48,11 @@ let getAllConversationItems = (currentUserId) => {
         conversation = conversation.toObject();
         if (conversation.members) {
           let getMessages = await MessageModel.model.getMessagesInGroup(conversation._id, LIMIT_MESSAGES_TAKEN);
-          conversation.messages = getMessages;
+          conversation.messages = getMessages.reverse();
         }
         else {
           let getMessages = await MessageModel.model.getMessagesInPersonal(currentUserId, conversation._id, LIMIT_MESSAGES_TAKEN);
-          conversation.messages = getMessages;
+          conversation.messages = getMessages.reverse();
         }
         return conversation;
       })
@@ -111,7 +111,7 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
         };
 
         //Create new message
-        let newMessage = await MessageModel.model.createNew(newMessageItem);
+        let newMessage = await MessageModel.model.createNew(newMessageItem);      
 
         //Update group chat
         await ChatGroupModel.updateWhenHasNewMessage(receiverId, getChatGroupReceiver.messageAmount + 1);

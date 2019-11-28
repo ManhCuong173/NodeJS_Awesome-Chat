@@ -98,8 +98,6 @@ function gridPhotos(layoutNumber) {
   $('.show-images').unbind('click').on('click', function () {
     let href = $(this).attr('href');
     let modalImagesId = href.replace('#', '');
-
-    console.log(modalImagesId);
     //Cấu hình gridPhotos
     let countRows = Math.ceil($(`#${modalImagesId}`).find('div.all-images>img').length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
@@ -174,16 +172,29 @@ function changeTypeChat() {
 
 function changeScreenChat() {
   $('.room-chat').unbind('click').on('click', function () {
+    //Tìm data-chat lấy ID của users đang chat
+    let dataId = $(this).find('li').data('chat');
+    //Xóa class active mặc định
     $('.person').removeClass('active');
-    $(this).find('li').addClass('active');
+
+    $(`.person[data-chat = ${dataId}]`).addClass('active');
     $(this).tab("show");
 
-    let dataId = $(this).find('li').data('chat');
     nineScrollRight(dataId);
     // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
     enableEmojioneArea(dataId);
   })
 };
+
+  //Chuyển đổi hiển thị emoji chuẩn thông qua phương thức của dependency emojione
+  function convertEmoji() {
+    $('.convert-emoji').each(function(){
+      var original = $(this).html();
+      var converted = emojione.toImage(original);
+      $(this).html(converted);
+    });
+  };
+
 
 $(document).ready(function () {
 
@@ -223,4 +234,6 @@ $(document).ready(function () {
   //Luôn click vào khung chat đầu tiên khi reload trang
   $('ul.people').find('a').first().click();
 
+  //Convert các unicode thành hình ảnh cảm xúc
+  convertEmoji();
 });
