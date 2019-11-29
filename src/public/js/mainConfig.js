@@ -43,12 +43,19 @@ function enableEmojioneArea(divId) {
       //Gán giá trị vào thẻ input đã bị ẩn
       keyup: function (editor, event) {
         $(`#write-chat-${divId}`).val(this.getText());
+        typingOn(divId);
       },
 
       click: function() {
-
         //Bật lắng nghe DOM cho việc chat tin nhắn văn bản và emoji
         textAndEmojiChat(divId);
+        
+        //Kích hoạt sự kiện realtime typing on 
+        typingOn(divId);
+      },
+
+      blur: function() {
+        typingOff(divId);
       }
     },
   });
