@@ -22,8 +22,7 @@ function textAndEmojiChat(divId) {
       };
 
       $.post('/message/add-new-text-emoji', dataTextEmojiForSend, function (data) {
-        console.log(data);
-        
+                
         let dataToEmit = {
           message: data.message
         }
@@ -64,6 +63,10 @@ function textAndEmojiChat(divId) {
 
         //Handle realtime
         socket.emit('chat-text-emoji', dataToEmit);
+
+        //Stop typing effect
+        socket.emit('user-is-stop-typing', dataToEmit);
+        
       }).fail(function (response) {
         alertify.notify(response.responseText, 'error', 7);
       });
