@@ -23,6 +23,8 @@ function textAndEmojiChat(divId) {
 
       $.post('/message/add-new-text-emoji', dataTextEmojiForSend, function (data) {
                 
+        console.log(data);
+        
         let dataToEmit = {
           message: data.message
         }
@@ -37,6 +39,7 @@ function textAndEmojiChat(divId) {
           messageOfMe.html(convertEmojiMessages);
           dataToEmit.contactId = targetId;
         }
+
         //B2: Append data to display
         $(`.right .chat[data-chat = ${divId}]`).append(messageOfMe);
         nineScrollRight(divId);
@@ -61,10 +64,10 @@ function textAndEmojiChat(divId) {
         });
         $(`.person[data-chat = ${divId}]`).click();
 
-        //Handle realtime
-        socket.emit('chat-text-emoji', dataToEmit);
+        //B6: Handle realtime chat text
+          socket.emit('chat-text-emoji', dataToEmit);
 
-        //Stop typing effect
+        //B7: Handle stop typing effect
         socket.emit('user-is-stop-typing', dataToEmit);
         
       }).fail(function (response) {
@@ -77,7 +80,7 @@ function textAndEmojiChat(divId) {
 socket.on('response-chat-text-emoji', function (response) {
 
   let divId = null;
-
+  
   // B1: Handle sended data
   let messageOfYou = $(`<div class="bubble you convert-emoji" data-mess-id="${response.message._id}"></div>`);
   let convertEmojiMessages = emojione.toImage(response.message.text);
