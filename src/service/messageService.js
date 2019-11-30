@@ -113,6 +113,10 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
 
         //Create new message
         let newMessage = await MessageModel.model.createNew(newMessageItem);      
+        
+        //Get Id of newest message
+        let newestIdMessage = await MessageModel.model.getNewestIdMessage(newMessageItem.senderId, newMessageItem.receiverId, newMessageItem.conversationType, newMessageItem.messageType);
+        newMessageItem._id = newestIdMessage._id;
 
         //Update group chat
         await ChatGroupModel.updateWhenHasNewMessage(receiverId, getChatGroupReceiver.messageAmount + 1);
@@ -143,6 +147,10 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
         };
         //Create new message
         let newMessage = await MessageModel.model.createNew(newMessageItem);
+
+        //Get Id of newest message
+        let newestIdMessage = await MessageModel.model.getNewestIdMessage(newMessageItem.senderId, newMessageItem.receiverId, newMessageItem.conversationType, newMessageItem.messageType);
+        newMessageItem._id = newestIdMessage._id;
 
         //Update contact
         await ContactModel.updateWhenHasNewMessage(sender.id, getChatUserReceiver._id);

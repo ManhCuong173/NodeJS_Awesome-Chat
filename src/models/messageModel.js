@@ -57,6 +57,17 @@ MessageSchema.statics = {
     return this.find({
       "receiverId": receiverId
     }).sort({"createdAt": -1}).limit(limit).exec();
+  },
+
+  getNewestIdMessage(senderId, receiverId, conversationType, messageType) {
+    return this.findOne({
+      $and: [
+        {"senderId": senderId},
+        {"receiverId": receiverId},
+        {"conversationType": conversationType},
+        {"messageType": messageType}
+      ]
+    }, {"_id": 1}).sort({"createdAt":-1}).limit(1).exec();
   }
 }
 

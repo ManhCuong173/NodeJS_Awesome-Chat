@@ -105,6 +105,10 @@ function gridPhotos(layoutNumber) {
   $('.show-images').unbind('click').on('click', function () {
     let href = $(this).attr('href');
     let modalImagesId = href.replace('#', '');
+
+    //Lấy dữ liệu image
+    let originDataImage = $(`#${modalImagesId}`).find('div.modal-body').html();
+
     //Cấu hình gridPhotos
     let countRows = Math.ceil($(`#${modalImagesId}`).find('div.all-images>img').length / layoutNumber);
     let layoutStr = new Array(countRows).fill(layoutNumber).join("");
@@ -125,8 +129,10 @@ function gridPhotos(layoutNumber) {
         });
       }
     });
-  })
-
+    $(`#${modalImagesId}`).on('hidden.bs.modal', function() {
+      $(this).find('div.modal-body').html(originDataImage);
+    });
+  });
 }
 
 function addFriendsToGroup() {
