@@ -19,10 +19,12 @@ export const transError = {
   token_undefined: "Token không tồn tại",
   login_failed: "Sai tài khoản hoặc mật khẩu" ,
   server_error: "Lỗi từ phía server. Bạn đăng nhập lại một lần nữa",
-  avatar_type: "Kiểu file không hoợp lệ, chỉ chấp nhận kiểu file png, jpg, jpeg",
+  avatar_type: "Kiểu file không hợp lệ, chỉ chấp nhận kiểu file png, jpg, jpeg",
   avatar_size: "Ảnh upload chỉ tối đa cho phép 1MB",
   user_current_password_failed: "Mật khẩu hiện tại không chính xác",
-  conversation_not_founded: "Không tìm thấy cuộc trò chuyện này"
+  conversation_not_founded: "Không tìm thấy cuộc trò chuyện này",
+  image_message_type: "Kiểu file không hợp lệ, chỉ chấp nhận kiểu file png, jpg, jpeg",
+  image_message_size: "Ảnh upload chỉ tối đa cho phép 1MB"
 }
 
 export const transSuccess = {
