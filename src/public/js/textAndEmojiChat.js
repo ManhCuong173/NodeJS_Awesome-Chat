@@ -27,7 +27,7 @@ function textAndEmojiChat(divId) {
           message: data.message
         }
         // B1: Handle sended data
-        let messageOfMe = $(`<div class="bubble me convert-emoji fadeInUp" data-mess-id="${data.message._id}"></div>`);
+        let messageOfMe = $(`<div class="bubble me convert-emoji" data-mess-id="${data.message._id}"></div>`);
         let convertEmojiMessages = emojione.toImage(data.message.text);
         if (dataTextEmojiForSend.isChatGroup) {
           let senderAvatar = (`<img src='/images/users/${data.message.sender.avatar}' class='avatar-small' title='${data.message.sender.name}'>`);

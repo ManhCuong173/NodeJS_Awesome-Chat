@@ -10,17 +10,17 @@ function updateUserInfo(){
     let math = ["image/jpg", "image/jpeg", "image/png"];
     let limit = 108576; //Byte = 1MB
 
-    // if($.inArray(fileData.type, math) === -1){
-    //   alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận kiểu file jpg/jpeg/png", "error", 7);
-    //   $(this).val(null);
-    //   return false;
-    // }
+    if($.inArray(fileData.type, math) === -1){
+      alertify.notify("Kiểu file không hợp lệ, chỉ chấp nhận kiểu file jpg/jpeg/png", "error", 7);
+      $(this).val(null);
+      return false;
+    }
 
-    // if(fileData.size>limit){
-    //   alertify.notify("File không được quá lớn, chỉ cho phép dung lượng 1MB", "error", 7);
-    //   $(this).val(null);
-    //   return false;
-    // }
+    if(fileData.size>limit){
+      alertify.notify("File không được quá lớn, chỉ cho phép dung lượng 1MB", "error", 7);
+      $(this).val(null);
+      return false;
+    }
 
     //Chỉ khi event change được gọi mới xử lý những dòng code dưới đây
     if(typeof FileReader !== 'undefined'){
