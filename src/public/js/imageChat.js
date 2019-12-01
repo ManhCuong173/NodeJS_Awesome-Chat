@@ -11,6 +11,7 @@ function imageChat(divId) {
 
   $(`#image-chat-${divId}`).unbind('change').on('change', function () {
     let fileData = $(this).prop("files")[0];
+    
     let math = ["image/jpg", "image/jpeg", "image/png"];
     let limit = 108576; //Byte = 1MB
 
@@ -112,8 +113,6 @@ function imageChat(divId) {
 
 socket.on('response-chat-image', function (response) {
   let divId = null;
-
-  console.log(response);
   
   // B1: Handle sended data
   let messageOfYou = $(`<div class="bubble you convert-emoji bubble-image-file" data-mess-id="${response.message._id}"></div>`);

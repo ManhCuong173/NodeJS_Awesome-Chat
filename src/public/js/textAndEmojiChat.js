@@ -22,8 +22,6 @@ function textAndEmojiChat(divId) {
       };
 
       $.post('/message/add-new-text-emoji', dataTextEmojiForSend, function (data) {
-                
-        console.log(data);
         
         let dataToEmit = {
           message: data.message
