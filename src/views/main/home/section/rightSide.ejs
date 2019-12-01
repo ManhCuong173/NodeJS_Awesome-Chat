@@ -71,8 +71,8 @@
                                         data-chat="<%= conversation._id %>">
                                     <i class="fa fa-photo"></i>
                                 </label>
-                                <label for="attach-chat">
-                                    <input type="file" id="attach-chat" name="my-attach-chat" class="attach-chat"
+                                <label for="attach-chat-<%= conversation._id %>">
+                                    <input type="file" id="attach-chat-<%= conversation._id %>" name="my-attach-chat" class="attach-chat"
                                         data-chat="<%= conversation._id %>">
                                     <i class="fa fa-paperclip"></i>
                                 </label>
@@ -130,11 +130,7 @@
                                     </a>
                                 </div>
                                 <% }%>
-            
                                 <% }); %>
-            
-            
-            
                             </div>
                         </div>
                         <div class="write" data-chat="<%= conversation._id %>">
@@ -146,8 +142,8 @@
                                         data-chat="<%= conversation._id %>">
                                     <i class="fa fa-photo"></i>
                                 </label>
-                                <label for="attach-chat">
-                                    <input type="file" id="attach-chat" name="my-attach-chat" class="attach-chat"
+                                <label for="attach-chat-<%= conversation._id %>">
+                                    <input type="file" id="attach-chat-<%= conversation._id %>" name="my-attach-chat" class="attach-chat"
                                         data-chat="<%= conversation._id %>">
                                     <i class="fa fa-paperclip"></i>
                                 </label>

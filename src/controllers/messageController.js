@@ -5,6 +5,7 @@ import { transError, transSuccess } from '../../lang/vi'
 import multer from 'multer'
 import fsExtra from 'fs-extra'
 
+//Handle Text & Emoji Chat
 let addNewTextEmoji = async (req, res) => {
   let errorsArr = [];
   let validationErrors = validationResult(req);
@@ -41,6 +42,7 @@ let addNewTextEmoji = async (req, res) => {
   }
 }
 
+//Handle Image Chat
 let storageImageChat = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, app.image_message_directory);
@@ -61,8 +63,63 @@ let imageMessageUploadFile = multer({
   limits: { fileSize: app.image_limit_size }
 }).single('my-image-chat');
 
-
 let addNewImage = (req, res) => {
+
+  imageMessageUploadFile(req, res, async (error) => {
+    if (error) {
+      //If has the property error.message, multer always return size file error 
+      if (error.message) {
+        return res.status(500).send(transError.image_message_size);
+      }
+      return res.status(500).send(error);
+    }
+
+    try {
+      let sender = {
+        id: req.user._id,
+        name: req.user.username,
+        avatar: req.user.avatar
+      };
+
+      //Get data from post method
+      let receiverId = req.body.uid;
+      let messageVal = req.file
+      let isChatGroup = req.body.isChatGroup;
+
+      //Create new message send to database
+      let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup);
+
+      //Remove Image in folder images because image is save into MongoDB
+      
+      await fsExtra.remove(`${app.image_message_directory}/${newMessage.file.fileName}`);
+
+      return res.status(200).send({ message: newMessage });
+    } catch (error) {
+      return res.status(500).send(error);
+    }
+  })
+
+
+}
+
+// Handle Attachment Chat
+let storageAttachmentChat = multer.diskStorage({
+  destination: (req, file, callback) => {
+    callback(null, app.attachment_message_directory);
+  },
+  filename: (req, file, callback) => {
+   let attachmentName = file.originalname;
+    callback(null, attachmentName);
+  }
+});
+
+let imageMessageUploadFile = multer({
+  storage: storageImageChat,
+  limits: { fileSize: app.image_limit_size }
+}).single('my-image-chat');
+
+
+let addNewAttachmentFile = (req, res) => {
 
   imageMessageUploadFile(req, res, async (error) => {
     if (error) {
@@ -101,5 +158,6 @@ let addNewImage = (req, res) => {
 }
 module.exports = {
   addNewTextEmoji: addNewTextEmoji,
-  addNewImage : addNewImage
+  addNewImage : addNewImage,
+  addNewAttachmentFile : addNewAttachmentFile
 }

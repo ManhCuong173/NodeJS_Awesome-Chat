@@ -109,6 +109,7 @@ let addNewTextEmoji = (sender, receiverId, messageVal, isChatGroup) => {
           receiver:receiver,
           text: messageVal,
           createdAt: Date.now()
+          
         };
 
         //Create new message
@@ -228,7 +229,7 @@ let addNewImage = (sender, receiverId, messageVal, isChatGroup) => {
 
         let imageBuffer = await fsExtra.readFile(messageVal.path);
         let imageContentType = await messageVal.mimetype;
-        let imageName = messageVal.originalName;
+        let imageName = messageVal.originalname;
 
         let newMessageItem = {
           senderId: sender.id,

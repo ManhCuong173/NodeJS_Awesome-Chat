@@ -187,6 +187,7 @@ function changeScreenChat() {
   $('.room-chat').unbind('click').on('click', function () {
     //Tìm data-chat lấy ID của users đang chat
     let dataId = $(this).find('li').data('chat');
+    
     //Xóa class active mặc định
     $('.person').removeClass('active');
 
