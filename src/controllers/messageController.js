@@ -103,7 +103,7 @@ let addNewImage = (req, res) => {
 }
 
 // Handle Attachment Chat
-let storageAttachmentChat = multer.diskStorage({
+let storageAttachmentFileChat = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, app.attachment_message_directory);
   },
@@ -113,19 +113,19 @@ let storageAttachmentChat = multer.diskStorage({
   }
 });
 
-let imageMessageUploadFile = multer({
-  storage: storageImageChat,
-  limits: { fileSize: app.image_limit_size }
-}).single('my-image-chat');
+let attachmentFileMessageUploadFile = multer({
+  storage: storageAttachmentFileChat,
+  limits: { fileSize: app.attachment_limit_size }
+}).single('my-attach-chat');
 
 
 let addNewAttachmentFile = (req, res) => {
 
-  imageMessageUploadFile(req, res, async (error) => {
+  attachmentFileMessageUploadFile(req, res, async (error) => {
     if (error) {
       //If has the property error.message, multer always return size file error 
       if (error.message) {
-        return res.status(500).send(transError.image_message_size);
+        return res.status(500).send(transError.attachment_message_size);
       }
       return res.status(500).send(error);
     }
@@ -143,10 +143,11 @@ let addNewAttachmentFile = (req, res) => {
       let isChatGroup = req.body.isChatGroup;
 
       //Create new message send to database
-      let newMessage = await message.addNewImage(sender, receiverId, messageVal, isChatGroup);
+      let newMessage = await message.addNewAttachmentFile(sender, receiverId, messageVal, isChatGroup);
 
       //Remove Image in folder images becasue image is save into MongoDB
-      await fsExtra.remove(`${app.image_message_directory}/${newMessage.file.fileName}`);
+      
+      await fsExtra.remove(`${app.attachment_message_directory}/${newMessage.file.fileName}`);
 
       return res.status(200).send({ message: newMessage });
     } catch (error) {

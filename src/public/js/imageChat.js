@@ -48,6 +48,8 @@ function imageChat(divId) {
       processData: false,
       data: formDataToUploadImage,
       success: function (data) {
+
+        //Data for using realtime socket
         let dataToEmit = {
           message: data.message
         }
