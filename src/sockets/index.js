@@ -7,6 +7,7 @@ import chatTextEmoji from './chat/chatTextEmoji'
 import typingOn from './chat/typingOn'
 import typingOff from './chat/typingOff'
 import chatImage from './chat/chatImage'
+import chatAttachmentFile from './chat/chatAttachmentFile'
 
 /**
  * 
@@ -22,6 +23,7 @@ let initSockets = (io) => {
   typingOn(io);
   typingOff(io);
   chatImage(io);
+  chatAttachmentFile(io);
 }
 
 module.exports = initSockets;

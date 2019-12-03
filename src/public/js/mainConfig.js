@@ -194,12 +194,17 @@ function changeScreenChat() {
     $(`.person[data-chat = ${dataId}]`).addClass('active');
     $(this).tab("show");
 
+    //Cuộn trang đến vị trí message cuối cùng
     nineScrollRight(dataId);
+
     // Bật emoji, tham số truyền vào là id của box nhập nội dung tin nhắn
     enableEmojioneArea(dataId);
 
     //Bật lắng nghe DOM cho việc tải hình ảnh
     imageChat(dataId);
+
+    //Bất lắng nghe DOM cho việc tải file
+    attachmentFileChat(dataId);
   })
 };
 
