@@ -205,6 +205,11 @@ function changeScreenChat() {
 
     //Bất lắng nghe DOM cho việc tải file
     attachmentFileChat(dataId);
+
+    //Bật lắng nghe cho cuộc trò chuyện video chat
+    videoChat(dataId);
+
+    
   })
 };
 
@@ -258,4 +263,8 @@ $(document).ready(function () {
 
   //Convert các unicode thành hình ảnh cảm xúc
   convertEmoji();
+
+  $('#video-chat-group').bind('click', function() {
+    alertify.notify('Không khả dụng tính năng call video trên chat nhóm', 'warning', 7);
+  })
 });
