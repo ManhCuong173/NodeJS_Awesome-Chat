@@ -30,7 +30,7 @@ function removeContact() {
           }
         });
       }
-  });
+    });
 });
 }
 socket.on('response-remove-contact', function (user) {

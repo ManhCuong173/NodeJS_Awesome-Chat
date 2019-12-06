@@ -14,6 +14,8 @@ import socketio from 'socket.io'
 import initSockets from './sockets/index'
 import configSocketIo from './config/socketio'
 import cookieParser from 'cookie-parser'
+import events from 'events'
+import * as configApp from './config/app'
 
 // pem.config({
 //   pathOpenSSL: 'usr/local/bin/openssl'
@@ -58,6 +60,9 @@ import cookieParser from 'cookie-parser'
 //     }
 // )});
 const app = express();
+
+//Set Max Listener For Socket
+events.EventEmitter.defaultMaxListeners = configApp.app.max_event_listener;
 
 let server = http.createServer(app);
 let io = socketio(server);
