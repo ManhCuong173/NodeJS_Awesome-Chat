@@ -33,13 +33,17 @@ $(document).ready(function () {
     alertify.notify('Người dùng này hiện không trực tuyến', 'error', 7);
   });
 
+  //Get ice servers list
+  let iceServersList = $('#ice-servers-list').text();
+
   let getPeerId = '';
   const peer = new Peer({
     key: 'peerjs',
     host: 'peerjs-server-trungquandev.herokuapp.com',
     secure: true,
     port: 443,
-    debug: 3
+    // debug: 3,
+    config: {'iceServers': JSON.parse(iceServersList)}
   });
 
   peer.on('open', function (peerId) {
@@ -58,7 +62,6 @@ $(document).ready(function () {
       listenerName: listenerName,
       listenerPeerId: getPeerId
     }
-    console.log(getPeerId);
     
     //Step 04 of listener
     socket.emit('listener-emit-peer-id-to-server', dataToEmit);
